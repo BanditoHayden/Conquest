@@ -23,7 +23,6 @@ namespace Conquest.Items.Weapons.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.rare = 2;
 
             Item.width = 68;
             Item.height = 68;
@@ -35,6 +34,7 @@ namespace Conquest.Items.Weapons.Melee
             //Item.UseSound = SoundID.Item1;
             Item.noMelee = true;
             Item.autoReuse = false;
+            Item.rare = ItemRarityID.White;
 
             //   Item.channel = true;
             Item.value = Item.sellPrice(gold: 1);
