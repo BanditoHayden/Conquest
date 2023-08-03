@@ -30,8 +30,8 @@ namespace Conquest.Items.Weapons.Melee
             Item.reuseDelay = 2;
 
             Item.autoReuse = false;
-            Item.rare = 2;
-            Item.value = Item.buyPrice(gold: 5);
+            Item.rare = ItemRarityID.White;
+            Item.value = Item.buyPrice(gold: 1);
             // Weapon Properties
             Item.damage = 14;
             Item.knockBack = 2f;
