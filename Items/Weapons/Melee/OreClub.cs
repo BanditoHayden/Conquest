@@ -34,7 +34,7 @@ namespace Conquest.Items.Weapons.Melee
             //Item.UseSound = SoundID.Item1;
             Item.noMelee = true;
             Item.autoReuse = false;
-            Item.rare = ItemRarityID.White;
+            Item.rare = ItemRarityID.Green;
 
             //   Item.channel = true;
             Item.value = Item.sellPrice(gold: 1);
