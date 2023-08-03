@@ -18,14 +18,12 @@ namespace Conquest.Items.Weapons.Melee
             // Common Properties
             Item.width = 46;
             Item.height = 44;
-            Item.rare = 1;
-            Item.value = Item.sellPrice(silver: 1);
-            Item.noMelee = false;
+            Item.rare = ItemRarityID.White;
+            Item.value = Item.sellPrice(copper: 33);
             // Use Properties
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.noUseGraphic = false;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = false;
             // Weapon Properties
