@@ -1499,8 +1499,23 @@ Keybinds: {
 Tiles.QueenLarva2.MapEntry: Queen Larva2
 
 NPCs: {
-	AntlionQueen.DisplayName: Antlion Queen
-	Anubis.DisplayName: Anubis
+	AntlionQueen: {
+		DisplayName: Antlion Queen
+
+		BossChecklistIntegration: {
+			EntryName: Antlion Queen
+			SpawnInfo: Found in the underground desert.
+		}
+	}
+
+	Anubis: {
+		DisplayName: Anubis
+
+		BossChecklistIntegration: {
+			EntryName: Anubis
+			SpawnInfo: Found in the depths of the Ancient City of Thebes (Desert Temple)
+		}
+	}
 
 	Dande: {
 		DisplayName: Dande
@@ -1518,7 +1533,15 @@ NPCs: {
 		}
 	}
 
-	DandukeBoss.DisplayName: Danduke
+	DandukeBoss: {
+		DisplayName: Danduke
+
+		BossChecklistIntegration: {
+			EntryName: Danduke
+			SpawnInfo: Found in the Flower Field
+		}
+	}
+
 	Deathstalker.DisplayName: Deathstalker
 	GiantMusnail.DisplayName: Giant Musnail
 	Ghostling.DisplayName: Ghostling

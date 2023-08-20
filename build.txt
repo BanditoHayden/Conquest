@@ -1,6 +1,6 @@
 displayName = Conquest
 author = Bandito
-version = 1.0.2.5
+version = 1.0.2.6
 modReferences = SubworldLibrary
 dllReferences = StructureHelper
 homepage = https://discord.gg/dNunYXmRbn

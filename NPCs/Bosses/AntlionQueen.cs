@@ -1,4 +1,5 @@
 ﻿
+using Conquest.Assets.Systems;
 using Conquest.Items.BossBags;
 using Conquest.Items.Tile;
 using Conquest.Items.Weapons.Magic;
@@ -62,7 +63,14 @@ namespace Conquest.NPCs.Bosses
             NPC.lifeMax = (int)(NPC.lifeMax * 0.625f * balance);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
-        
+        public override void OnKill()
+        {
+            NPC.SetEventFlagCleared(ref DownedBossSystem.DownedQueen, -1);
+            if (Main.netMode == NetmodeID.Server)
+            {
+                NetMessage.SendData(MessageID.WorldData);
+            }
+        }
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
