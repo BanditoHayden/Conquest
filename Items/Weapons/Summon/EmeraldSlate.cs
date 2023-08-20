@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 using Terraria.DataStructures;
@@ -33,6 +34,7 @@ namespace Conquest.Items.Weapons.Summon
             Item.height = 38;
             Item.mana = 10;
             Item.UseSound = SoundID.Item1;
+            ItemID.Sets.SkipsInitialUseSound[Type] = true;
             Item.DamageType = DamageClass.Summon;
             Item.autoReuse = false;
             Item.noUseGraphic = false;
@@ -45,15 +47,33 @@ namespace Conquest.Items.Weapons.Summon
             Item.shoot = ModContent.ProjectileType<EmeraldWall>();
             Item.shootSpeed = 0;
 
+
+
         }
 
         public override bool CanUseItem(Player player)
         {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<EmeraldWall>()] > 0 || player.GetModPlayer<MyPlayer>().emeraldCD > 0)
+            if (player.slotsMinions >= player.maxMinions) return false;
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<EmeraldWall>()] > 2 || player.GetModPlayer<MyPlayer>().emeraldCD > 0)
             {
                 return false;
             }
             return true;
+        }
+
+        public override bool? UseItem(Player player)
+        {
+            if (player.slotsMinions >= player.maxMinions || player.ownedProjectileCounts[ModContent.ProjectileType<EmeraldWall>()] > 2 || player.GetModPlayer<MyPlayer>().emeraldCD > 0)
+            {
+                return false;
+            }
+            SoundEngine.PlaySound(Item.UseSound, player.position);
+            return base.UseItem(player);
+        }
+
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<EmeraldWall>()] > 2) type = ProjectileID.None;
         }
     }
 }

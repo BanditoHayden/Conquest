@@ -75,16 +75,22 @@ namespace Conquest.Projectiles.Summoner
 
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.Shatter);
-            Player player = Main.player[Projectile.owner];
-            NPC victim = FindClosestNPC();
-            for (int i = 0; i < 7; i++)
+            if (timer > 5)
             {
-                Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), ModContent.ProjectileType<EmeraldWallSharp>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-                p.ai[1] = victim.whoAmI;
+                Player player = Main.player[Projectile.owner];
+                NPC victim = FindClosestNPC();
+                if (victim != null)
+                {
+                    SoundEngine.PlaySound(SoundID.Shatter);
+                    for (int i = 0; i < 7; i++)
+                    {
+                        Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), ModContent.ProjectileType<EmeraldWallSharp>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                        p.ai[1] = victim.whoAmI;
+                    }
+                    player.GetModPlayer<MyPlayer>().emerald = false;
+                    player.GetModPlayer<MyPlayer>().emeraldCD += 40 * (4 - player.ownedProjectileCounts[Type]);
+                }
             }
-            player.GetModPlayer<MyPlayer>().emerald = false;
-            player.GetModPlayer<MyPlayer>().emeraldCD += 40 * (4 - player.ownedProjectileCounts[Type]);
         }
 
         public override bool PreDraw(ref Color lightColor)

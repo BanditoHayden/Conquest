@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.ID;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Conquest.Buffs;
@@ -26,17 +27,22 @@ namespace Conquest.Projectiles.Summoner
 
         public sealed override void SetDefaults()
         {
-            Projectile.width = 18;
-            Projectile.height = 28;
-            Projectile.tileCollide = false;
+            Projectile.width = 14;
+            Projectile.height = 9;
+            Projectile.tileCollide = true;
             Projectile.friendly = true;
             Projectile.minion = true;
             Projectile.DamageType = DamageClass.Summon;
-            Projectile.minionSlots = 1f;
+            Projectile.minionSlots = 0.5f;
             Projectile.penetrate = -1;
         }
 
         public override bool? CanCutTiles()
+        {
+            return false;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
         {
             return false;
         }
@@ -57,6 +63,7 @@ namespace Conquest.Projectiles.Summoner
 
             GeneralBehavior(owner, out Vector2 vectorToIdlePosition, out float distanceToIdlePosition);
             SearchForTargets(owner, out bool foundTarget, out float distanceFromTarget, out Vector2 targetCenter);
+            BoidsMovement();
             Movement(foundTarget, distanceFromTarget, targetCenter, distanceToIdlePosition, vectorToIdlePosition);
             Visuals();
         }
@@ -78,14 +85,82 @@ namespace Conquest.Projectiles.Summoner
             return true;
         }
 
+        public override void Kill(int timeLeft)
+        {
+            SoundEngine.PlaySound(SoundID.NPCDeath1);
+            for (int i = 0; i < 3; i++)
+            {
+                Dust.NewDustDirect(Projectile.TopLeft, Projectile.width, Projectile.height, DustID.Blood).velocity = Main.rand.NextVector2Circular(4, 4);
+            }
+        }
+
+        private void BoidsMovement()
+        {
+            Vector2 separation = Vector2.Zero;
+            Vector2 alignment = Vector2.Zero;
+            Vector2 cohesion = Vector2.Zero;
+            int count = 0;
+
+            foreach (Projectile p in Main.projectile)
+            {
+                if (p.hostile && p.Hitbox.Intersects(Projectile.Hitbox))
+                {
+                    Projectile.Kill();
+                    p.penetrate--;
+                }
+
+                if (Projectile.whoAmI != p.whoAmI && p.type == Projectile.type && p.active && p.Center.Distance(Projectile.Center) < 128)
+                {
+                    count++;
+
+                    // avoid colliding with nearby boids
+                    separation += 4f * (Projectile.Center - p.Center).SafeNormalize(Vector2.Zero) / (Projectile.Center - p.Center).Length();
+
+                    // face the same way as nearby boids
+                    alignment += 1 / 128f * (p.velocity - Projectile.velocity);
+
+                    // move toward the center of groups of boids
+                    cohesion += 1 / 128f * (p.Center - Projectile.Center);
+                }
+                else if (Projectile.whoAmI != p.whoAmI && p.active && (p.DamageType != DamageClass.Summon || p.hostile) && (Projectile.Center - p.Center).Length() < 128)
+                {
+                    // avoid projectiles
+                    separation += 8f * (Projectile.Center - p.Center).SafeNormalize(Vector2.Zero) / (Projectile.Center - p.Center).Length();
+                }
+            }
+
+            if (!Main.LocalPlayer.dead && (Projectile.Center - Main.LocalPlayer.Center).Length() > 200)
+            {
+                // return to player
+                separation -= 4f * (Projectile.Center - Main.LocalPlayer.Center).SafeNormalize(Vector2.Zero) / (Projectile.Center - Main.LocalPlayer.Center).Length();
+            }
+
+            if (count > 0)
+            {
+                alignment /= count;
+                cohesion /= count;
+            }
+
+            Projectile.velocity += separation + alignment + cohesion;
+        }
+
         private void GeneralBehavior(Player owner, out Vector2 vectorToIdlePosition, out float distanceToIdlePosition)
         {
-            Vector2 idlePosition = owner.Center;
-            idlePosition.Y -= 48f;
+            Vector2 idlePosition = new Vector2(-48, 0);
 
-            float minionPositionOffsetX = (10 + Projectile.minionPos * 40) * -owner.direction;
-            idlePosition.X += minionPositionOffsetX;
-
+            int minionsOfSameType = 0;
+            foreach (Projectile p in Main.projectile)
+            {
+                if (p.owner == Projectile.owner && p.type == Projectile.type)
+                {
+                    minionsOfSameType++;
+                }
+            }
+            if (minionsOfSameType > 0)
+            {
+                idlePosition = idlePosition.RotatedBy(2 * MathF.PI / minionsOfSameType * (Projectile.minionPos + 1));
+            }
+            idlePosition += owner.Center;
 
             vectorToIdlePosition = idlePosition - Projectile.Center;
             distanceToIdlePosition = vectorToIdlePosition.Length();
@@ -219,8 +294,7 @@ namespace Conquest.Projectiles.Summoner
 
         private void Visuals()
         {
-            Projectile.rotation = Projectile.velocity.X * 0.05f;
-            Lighting.AddLight(Projectile.Center, Color.White.ToVector3() * 0.78f);
+            Projectile.rotation = Projectile.velocity.ToRotation();
         }
     }
 }
