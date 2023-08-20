@@ -1315,6 +1315,7 @@ Projectiles: {
 	NatureTentacle.DisplayName: Nature Tentacle
 	SoulTentacle.DisplayName: Soul Tentacle
 	SpaceRay.DisplayName: Space Ray
+	FireBullet.DisplayName: Fire Bullet
 }
 
 Buffs: {
