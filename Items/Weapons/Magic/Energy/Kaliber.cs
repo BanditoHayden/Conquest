@@ -25,8 +25,8 @@ public class Kaliber : EnergyWeapon
         
 
 	public override void SetDefaults()
-    {
-		Item.width = 26; 
+ 	{
+ 		Item.width = 26; 
         Item.height = 13;
         Item.value = 1000;
         Item.noMelee = true;
@@ -44,6 +44,13 @@ public class Kaliber : EnergyWeapon
 		Item.autoReuse = true;
         Item.UseSound = RetroBlast;
 	}
+
+	public override void UpdateInventory(Player player)
+    {
+        float energy = player.GetModPlayer<EnergyPlayer>().energyPower;
+        Item.useTime = (int)MathF.Round(21 - (3 * energy));
+        Item.useAnimation = (int)MathF.Round(21 - (3 * energy));
+    }
 }
 
 public class KaliberSpawning : GlobalNPC
