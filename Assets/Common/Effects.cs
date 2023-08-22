@@ -83,7 +83,7 @@ namespace Conquest.Assets.Common
 
             public void Draw(Projectile proj)
             {
-                MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
+                MiscShaderData miscShaderData = GameShaders.Misc["MagicMissile"];
                 miscShaderData.UseSaturation(-2.8f);
                 miscShaderData.UseOpacity(4f);
                 miscShaderData.Apply();
@@ -103,6 +103,34 @@ namespace Conquest.Assets.Common
             private float StripWidth(float progressOnStrip)
             {
                 return MathHelper.Lerp(0f, 32f, MathF.Sqrt(progressOnStrip));
+            }
+        }
+        public struct RedTrail
+        {
+            private static VertexStrip _vertexStrip = new VertexStrip();
+
+            public void Draw(Projectile proj)
+            {
+                MiscShaderData miscShaderData = GameShaders.Misc["MagicMissile"];
+                miscShaderData.UseSaturation(-2.8f);
+                miscShaderData.UseOpacity(4f);
+                miscShaderData.Apply();
+                _vertexStrip.PrepareStripWithProceduralPadding(proj.oldPos, proj.oldRot, StripColors, StripWidth, -Main.screenPosition + proj.Size / 2f);
+                _vertexStrip.DrawTrail();
+                Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            }
+
+            private Color StripColors(float progressOnStrip)
+            {
+                Color value = Main.hslToRgb(.225f, .39f, 0.7f);
+                Color result = Color.Lerp(Color.Red, new Color(188, 0, 101), progressOnStrip);
+                result.A = 0;
+                return result;
+            }
+
+            private float StripWidth(float progressOnStrip)
+            {
+                return MathHelper.Lerp(0f, 64f, MathF.Sqrt(progressOnStrip));
             }
         }
 
