@@ -1331,12 +1331,8 @@ Projectiles: {
 	SoulTentacle.DisplayName: Soul Tentacle
 	SpaceRay.DisplayName: Space Ray
 	FireBullet.DisplayName: Fire Bullet
-	UnusedAeroWind.DisplayName: Unused Aero Wind
-	UnusedAeroScim.DisplayName: Unused Aero Scim
-	AnubisHammerShadow.DisplayName: Anubis Hammer Shadow
-	CardboardSheet.DisplayName: Cardboard Sheet
-	CosmoboxShot.DisplayName: Cosmobox Shot
-	KaliberBolt.DisplayName: Kaliber Bolt
+	AnubisHammerShadow.DisplayName: Ancient Hammer
+	KaliberBolt.DisplayName: Kaliber
 }
 
 Buffs: {
