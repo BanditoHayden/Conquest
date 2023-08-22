@@ -224,11 +224,6 @@ Items: {
 		Tooltip: ""
 	}
 
-	Kaliber: {
-		DisplayName: Kaliber
-		Tooltip: "Charges up via latent magical energy"
-	}
-
 	Armored: {
 		DisplayName: Laser Pistol
 		Tooltip:
@@ -1196,14 +1191,14 @@ Items: {
 		Tooltip: ""
 	}
 
-	UniversalReceiver: {
-		DisplayName: Universal Receiver
-		Tooltip: ""
+	Kaliber: {
+		DisplayName: Kaliber
+		Tooltip: "Powers up with latent energy"
 	}
 
 	EnergyDiagnostic: {
 		DisplayName: Energy Diagnostic
-		Tooltip: "Displays the latent magical energy around the player"
+		Tooltip: "Displays the latent energy near the player"
 	}
 }
 
@@ -1331,8 +1326,7 @@ Projectiles: {
 	SoulTentacle.DisplayName: Soul Tentacle
 	SpaceRay.DisplayName: Space Ray
 	FireBullet.DisplayName: Fire Bullet
-	AnubisHammerShadow.DisplayName: Ancient Hammer
-	KaliberBolt.DisplayName: Kaliber
+	KaliberBolt.DisplayName: Kaliber Bolt
 }
 
 Buffs: {
@@ -1507,7 +1501,7 @@ Buffs: {
 }
 
 Keybinds: {
-	"Legendary Armament Activation.DisplayName": Legendary  Armament  Activation
+	"Legendary Armament Activation.DisplayName": Weapon Ability Activation
 	"Hunny Pot Activation.DisplayName": Hunny  Pot  Activation
 	"Cursed Trident Activation.DisplayName": Cursed  Trident  Activation
 	"Reload Weapon.DisplayName": Reload  Weapon
@@ -1516,8 +1510,23 @@ Keybinds: {
 Tiles.QueenLarva2.MapEntry: Queen Larva2
 
 NPCs: {
-	AntlionQueen.DisplayName: Antlion Queen
-	Anubis.DisplayName: Anubis
+	AntlionQueen: {
+		DisplayName: Antlion Queen
+
+		BossChecklistIntegration: {
+			EntryName: Antlion Queen
+			SpawnInfo: Found in the underground desert.
+		}
+	}
+
+	Anubis: {
+		DisplayName: Anubis
+
+		BossChecklistIntegration: {
+			EntryName: Anubis
+			SpawnInfo: Found in the depths of the Ancient City of Thebes (Desert Temple)
+		}
+	}
 
 	Dande: {
 		DisplayName: Dande
@@ -1535,7 +1544,15 @@ NPCs: {
 		}
 	}
 
-	DandukeBoss.DisplayName: Danduke
+	DandukeBoss: {
+		DisplayName: Danduke
+
+		BossChecklistIntegration: {
+			EntryName: Danduke
+			SpawnInfo: Found in the Flower Field
+		}
+	}
+
 	Deathstalker.DisplayName: Deathstalker
 	GiantMusnail.DisplayName: Giant Musnail
 	Ghostling.DisplayName: Ghostling
@@ -1596,11 +1613,6 @@ NPCs: {
 
 		Census.SpawnCondition: Conditions unknown
 	}
-
-	Sillyguy.DisplayName: Sillyguy
-	PetSillyguy.DisplayName: Pet Sillyguy
-	Goofball.DisplayName: Goofball
-	Bloodfin.DisplayName: Bloodfin
 }
 
 DamageClasses.FoudreDamageClass.DisplayName: melee/ranged Damage
