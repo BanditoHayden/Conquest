@@ -52,7 +52,7 @@ public class KaliberSpawning : GlobalNPC
     {
         if (npc.type == NPCID.TheDestroyer)
         {
-            npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Kaliber>(), 5, 3);
+            npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Kaliber>(), 5, 3));
         }
     }
 }
