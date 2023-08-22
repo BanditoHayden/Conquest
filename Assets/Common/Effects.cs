@@ -56,8 +56,8 @@ namespace Conquest.Assets.Common
                 miscShaderData.UseSaturation(-2.8f);
                 miscShaderData.UseOpacity(4f);
                 miscShaderData.Apply();
-                PurpleTrailRotationless._vertexStrip.PrepareStripWithProceduralPadding(proj.oldPos, proj.oldRot, StripColors, StripWidth, -Main.screenPosition + proj.Size / 2f);
-            PurpleTrailRotationless._vertexStrip.DrawTrail();
+                _vertexStrip.PrepareStripWithProceduralPadding(proj.oldPos, proj.oldRot, StripColors, StripWidth, -Main.screenPosition + proj.Size / 2f);
+                _vertexStrip.DrawTrail();
                 Main.pixelShader.CurrentTechnique.Passes[0].Apply();
             }
 
@@ -87,8 +87,8 @@ namespace Conquest.Assets.Common
                 miscShaderData.UseSaturation(-2.8f);
                 miscShaderData.UseOpacity(4f);
                 miscShaderData.Apply();
-                PurpleTrail._vertexStrip.PrepareStripWithProceduralPadding(proj.oldPos, proj.oldRot, StripColors, StripWidth, -Main.screenPosition + proj.Size / 2f);
-                PurpleTrail._vertexStrip.DrawTrail();
+                _vertexStrip.PrepareStripWithProceduralPadding(proj.oldPos, proj.oldRot, StripColors, StripWidth, -Main.screenPosition + proj.Size / 2f);
+                _vertexStrip.DrawTrail();
                 Main.pixelShader.CurrentTechnique.Passes[0].Apply();
             }
 
