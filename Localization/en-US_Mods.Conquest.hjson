@@ -1193,12 +1193,31 @@ Items: {
 
 	Kaliber: {
 		DisplayName: Kaliber
-		Tooltip: "Powers up with latent energy"
+		Tooltip:
+			'''
+			Powers up with latent energy
+			Higher energy increases firerate
+			'''
+	}
+	Marksman: {
+		DisplayName: Marksman
+		Tooltip:
+			'''
+			Powers up with latent energy
+			Higher energy adds hits to each bolt
+			'''
 	}
 
 	EnergyDiagnostic: {
-		DisplayName: Energy Diagnostic
-		Tooltip: "Displays the latent energy near the player"
+		DisplayName: Energy Potency Scanner
+		Tooltip:
+			'''
+			Displays the latent energy potency near the player
+			Certain biomes, blocks, weather, and candles can alter the latent energy potency
+			'Magical energy is woven into the fabric of the
+			world. Certain types of magic weapons are capable
+			of utilising the latent magic power of Terraria to
+			enhance their power.'
 
 	}
 }
