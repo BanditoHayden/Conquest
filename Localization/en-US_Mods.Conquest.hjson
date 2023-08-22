@@ -224,6 +224,11 @@ Items: {
 		Tooltip: ""
 	}
 
+	Kaliber: {
+		DisplayName: Kaliber
+		Tooltip: "Charges up via latent magical energy"
+	}
+
 	Armored: {
 		DisplayName: Laser Pistol
 		Tooltip:
@@ -1190,6 +1195,16 @@ Items: {
 		DisplayName: Arachnoid Lunchbox
 		Tooltip: ""
 	}
+
+	UniversalReceiver: {
+		DisplayName: Universal Receiver
+		Tooltip: ""
+	}
+
+	EnergyDiagnostic: {
+		DisplayName: Energy Diagnostic
+		Tooltip: "Displays the latent magical energy around the player"
+	}
 }
 
 Projectiles: {
@@ -1316,6 +1331,12 @@ Projectiles: {
 	SoulTentacle.DisplayName: Soul Tentacle
 	SpaceRay.DisplayName: Space Ray
 	FireBullet.DisplayName: Fire Bullet
+	UnusedAeroWind.DisplayName: Unused Aero Wind
+	UnusedAeroScim.DisplayName: Unused Aero Scim
+	AnubisHammerShadow.DisplayName: Anubis Hammer Shadow
+	CardboardSheet.DisplayName: Cardboard Sheet
+	CosmoboxShot.DisplayName: Cosmobox Shot
+	KaliberBolt.DisplayName: Kaliber Bolt
 }
 
 Buffs: {
@@ -1499,23 +1520,8 @@ Keybinds: {
 Tiles.QueenLarva2.MapEntry: Queen Larva2
 
 NPCs: {
-	AntlionQueen: {
-		DisplayName: Antlion Queen
-
-		BossChecklistIntegration: {
-			EntryName: Antlion Queen
-			SpawnInfo: Found in the underground desert.
-		}
-	}
-
-	Anubis: {
-		DisplayName: Anubis
-
-		BossChecklistIntegration: {
-			EntryName: Anubis
-			SpawnInfo: Found in the depths of the Ancient City of Thebes (Desert Temple)
-		}
-	}
+	AntlionQueen.DisplayName: Antlion Queen
+	Anubis.DisplayName: Anubis
 
 	Dande: {
 		DisplayName: Dande
@@ -1533,15 +1539,7 @@ NPCs: {
 		}
 	}
 
-	DandukeBoss: {
-		DisplayName: Danduke
-
-		BossChecklistIntegration: {
-			EntryName: Danduke
-			SpawnInfo: Found in the Flower Field
-		}
-	}
-
+	DandukeBoss.DisplayName: Danduke
 	Deathstalker.DisplayName: Deathstalker
 	GiantMusnail.DisplayName: Giant Musnail
 	Ghostling.DisplayName: Ghostling
@@ -1602,6 +1600,11 @@ NPCs: {
 
 		Census.SpawnCondition: Conditions unknown
 	}
+
+	Sillyguy.DisplayName: Sillyguy
+	PetSillyguy.DisplayName: Pet Sillyguy
+	Goofball.DisplayName: Goofball
+	Bloodfin.DisplayName: Bloodfin
 }
 
 DamageClasses.FoudreDamageClass.DisplayName: melee/ranged Damage
