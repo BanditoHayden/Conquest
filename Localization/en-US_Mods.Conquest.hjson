@@ -1190,6 +1190,16 @@ Items: {
 		DisplayName: Arachnoid Lunchbox
 		Tooltip: ""
 	}
+
+	Kaliber: {
+		Tooltip: ""
+		DisplayName: Kaliber
+	}
+
+	EnergyDiagnostic: {
+		Tooltip: ""
+		DisplayName: Energy Diagnostic
+	}
 }
 
 Projectiles: {
@@ -1316,6 +1326,7 @@ Projectiles: {
 	SoulTentacle.DisplayName: Soul Tentacle
 	SpaceRay.DisplayName: Space Ray
 	FireBullet.DisplayName: Fire Bullet
+	KaliberBolt.DisplayName: Kaliber Bolt
 }
 
 Buffs: {
@@ -1490,7 +1501,7 @@ Buffs: {
 }
 
 Keybinds: {
-	"Legendary Armament Activation.DisplayName": Legendary  Armament  Activation
+	"Legendary Armament Activation.DisplayName": Weapon Ability Activation
 	"Hunny Pot Activation.DisplayName": Hunny  Pot  Activation
 	"Cursed Trident Activation.DisplayName": Cursed  Trident  Activation
 	"Reload Weapon.DisplayName": Reload  Weapon
