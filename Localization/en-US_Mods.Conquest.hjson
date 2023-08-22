@@ -1199,6 +1199,7 @@ Items: {
 	EnergyDiagnostic: {
 		DisplayName: Energy Diagnostic
 		Tooltip: "Displays the latent energy near the player"
+
 	}
 }
 
