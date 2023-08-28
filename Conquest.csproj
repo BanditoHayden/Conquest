@@ -36,8 +36,10 @@
     <None Remove="Items\Vanity\Spiderman\ArachnoidSuit_Body.png" />
     <None Remove="Items\Weapons\Melee\ChainChomp.png" />
     <None Remove="Items\Weapons\Melee\GracefulDahlia.png" />
+    <None Remove="Items\Weapons\Melee\HaloScythe.png" />
     <None Remove="Items\Weapons\Melee\JermaSlash.png" />
     <None Remove="Items\Weapons\Melee\LightningKnife.png" />
+    <None Remove="Items\Weapons\Melee\StygianBlade.png" />
     <None Remove="Items\Weapons\Ranged\Model94.png" />
     <None Remove="Localization\en-US_Mods.Conquest.hjson" />
     <None Remove="NPCs\Bosses\RatKing\BallOfLight.png" />
