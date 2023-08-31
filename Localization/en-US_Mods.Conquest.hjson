@@ -1193,13 +1193,43 @@ Items: {
 
 	Kaliber: {
 		DisplayName: Kaliber
-		Tooltip: "Powers up with latent energy"
+		Tooltip:
+			'''
+			Powers up with latent energy
+			Higher energy increases firerate
+			'''
 	}
 
 	EnergyDiagnostic: {
-		DisplayName: Energy Diagnostic
-		Tooltip: "Displays the latent energy near the player"
+		DisplayName: Energy Potency Scanner
+		Tooltip:
+			'''
+			Displays the latent energy potency near the player
+			Certain biomes, blocks, weather, and candles can alter the latent energy potency
+			'Magical energy is woven into the fabric of the
+			world. Certain types of magic weapons are capable
+			of utilising the latent magic power of Terraria to
+			enhance their power
+			'''
+	}
 
+	Marksman: {
+		DisplayName: Marksman
+		Tooltip:
+			'''
+			Powers up with latent energy
+			Higher energy adds hits to each bolt
+			'''
+	}
+
+	HaloScythe: {
+		DisplayName: Halo Scythe
+		Tooltip: ""
+	}
+
+	StygianBlade: {
+		DisplayName: Stygian Blade
+		Tooltip: ""
 	}
 }
 
@@ -1328,6 +1358,14 @@ Projectiles: {
 	SpaceRay.DisplayName: Space Ray
 	FireBullet.DisplayName: Fire Bullet
 	KaliberBolt.DisplayName: Kaliber Bolt
+	KaliberSpawnBolt.DisplayName: Kaliber Spawn Bolt
+	MarksmanBolt.DisplayName: Marksman Bolt
+	MarksmanSpawnBolt.DisplayName: Marksman Spawn Bolt
+	Halo.DisplayName: Halo
+	HaloScytheProj.DisplayName: Halo Scythe Proj
+	SBS.DisplayName: S B S
+	StygianBladeProj.DisplayName: Stygian Blade Proj
+	StygianBladeShoot.DisplayName: Stygian Blade Shoot
 }
 
 Buffs: {
@@ -1614,6 +1652,8 @@ NPCs: {
 
 		Census.SpawnCondition: Conditions unknown
 	}
+
+	BeholderEnemy.DisplayName: Beholder 
 }
 
 DamageClasses.FoudreDamageClass.DisplayName: melee/ranged Damage

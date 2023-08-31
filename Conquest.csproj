@@ -48,6 +48,7 @@
     <None Remove="NPCs\Bosses\RatKing\CheeseRelease.png" />
     <None Remove="NPCs\Bosses\RatKing\Mouse.png" />
     <None Remove="NPCs\Bosses\RatKing\RatKingBoss_Head_Boss.png" />
+    <None Remove="NPCs\Miniboss\Beholder\BeholderEnemy.png" />
     <None Remove="NPCs\Town\KoboldMerchant.png" />
     <None Remove="NPCs\Town\KoboldMerchant_Head.png" />
     <None Remove="NPCs\Town\KoboldMerchant_Party.png" />
