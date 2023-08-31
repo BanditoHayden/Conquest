@@ -144,7 +144,7 @@ namespace Conquest.Projectiles.Melee
                 SWINGRANGE = 0;
                 secretVariable = Owner.MountedCenter.DirectionTo(Main.MouseWorld);
                 InitialAngle = Owner.Center.AngleTo(Main.MouseWorld);
-                Owner.velocity.X += Owner.MountedCenter.DirectionTo(Main.MouseWorld).X * 2;
+              //  Owner.velocity.X += Owner.MountedCenter.DirectionTo(Main.MouseWorld).X * 2;
             }
 
         }
