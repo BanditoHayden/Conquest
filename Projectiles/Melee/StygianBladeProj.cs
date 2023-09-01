@@ -1,4 +1,4 @@
-﻿using Conquest.Assets.Common;
+using Conquest.Assets.Common;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
@@ -144,7 +144,6 @@ namespace Conquest.Projectiles.Melee
                 SWINGRANGE = 0;
                 secretVariable = Owner.MountedCenter.DirectionTo(Main.MouseWorld);
                 InitialAngle = Owner.Center.AngleTo(Main.MouseWorld);
-              //  Owner.velocity.X += Owner.MountedCenter.DirectionTo(Main.MouseWorld).X * 2;
             }
 
         }
@@ -407,6 +406,9 @@ namespace Conquest.Projectiles.Melee
     }
     public class StygianBladeShoot : ModProjectile
     {
+        private ref float angVel => ref Projectile.ai[0];
+        private ref float Timer => ref Projectile.ai[1];
+
         public override string Texture => "Conquest/Projectiles/Melee/StygianBladeProj";
 
         public override void SetStaticDefaults()
@@ -427,9 +429,21 @@ namespace Conquest.Projectiles.Melee
             Projectile.DamageType = DamageClass.Melee; // Projectile is a melee projectile
             Projectile.light = 0.5f;
         }
+        public override void OnSpawn(IEntitySource source)
+        {
+            angVel = .6f;
+            base.OnSpawn(source);
+        }
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
+            Projectile.rotation += angVel * Projectile.direction;
+            Projectile.velocity *= 0.98f;
+            angVel *= 0.98f;
+            Timer++;
+            if (Timer > 80)
+            {
+                Projectile.Opacity -= 1 / 20f;
+            } 
             base.AI();
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
