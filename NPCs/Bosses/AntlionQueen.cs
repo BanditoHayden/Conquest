@@ -12,13 +12,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Conquest.NPCs.Bosses
 {
     [AutoloadBossHead]
@@ -35,7 +37,7 @@ namespace Conquest.NPCs.Bosses
                     PortraitPositionYOverride = 0f,
                 };
                 NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-            }
+        }
             public override void SetDefaults()
             {
                 NPC.width = 160;
