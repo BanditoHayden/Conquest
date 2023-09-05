@@ -10,7 +10,7 @@ using Terraria.GameContent;
 
 namespace Conquest.Projectiles.Melee
 {
-    public class AnubisHammerProj : Boomerang
+    public class AnubisHammerShadow : Boomerang
     {
         List<float> goodList = new List<float>(new float[10]);
         public override void SetDefaults()
@@ -20,14 +20,17 @@ namespace Conquest.Projectiles.Melee
             Projectile.height = 46;
             Projectile.penetrate = -1;
             Projectile.friendly = true;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.aiStyle = -1;
+
+            Projectile.alpha = 128;
 
             ReturnSpeed = 60f;
             HomingOnOwnerStrength = 1.2f;
             TravelOutFrames = 30;
             DoTurn = true;
             DoRotation = false;
+            BounceOnHit = false;
 
             ProjectileID.Sets.TrailingMode[Type] = 2;
             ProjectileID.Sets.TrailCacheLength[Type] = 10;
@@ -52,15 +55,12 @@ namespace Conquest.Projectiles.Melee
             return false;
         }
 
-        NPC farTarget = null;
-        NPC target = null;
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Projectile.ai[0] == 0f)
             {
-                farTarget = Helpers.GetClosestEnemy(Projectile.Center, 40f * 16f, true, true);
-                target = Helpers.GetClosestEnemy(Projectile.Center, 20f * 16f, true, true);
+                var target = Helpers.GetClosestEnemy(Projectile.Center, 20f * 16f, true, true);
 
                 // If there's an npc near the boomerang, we want to move towards it
                 if (target != null)
@@ -84,16 +84,6 @@ namespace Conquest.Projectiles.Melee
 
             }
             base.AI();
-        }
-
-        public override void OnReachedApex()
-        {
-            if (farTarget != null)
-            {
-                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(),
-                    Projectile.position, Projectile.DirectionTo(farTarget.Center) * Projectile.velocity.Length(),
-                    ModContent.ProjectileType<AnubisHammerShadow>(), Projectile.damage / 2, 0, Projectile.owner);
-            }
         }
     }
 }

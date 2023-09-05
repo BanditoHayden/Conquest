@@ -15,8 +15,9 @@ namespace Conquest.Projectiles.Melee
         public override void SetStaticDefaults()
         {
          //   ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 2.5f;
-            ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 600f;
-            ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 15f;
+            ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 450f;
+            ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 22;
+            ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = -1;
 
         }
         public override void SetDefaults()
@@ -29,22 +30,29 @@ namespace Conquest.Projectiles.Melee
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.scale = 1f;
+
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 10;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
 
-            Vector2 perturbedSpeed = new Vector2(0, -6).RotatedByRandom(MathHelper.ToRadians(360));
+            
             if (Main.rand.NextBool(3))
             {
-                if (player.strongBees)
+                for (int i = 0; i < 3; i++)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(Projectile.Center.X, Projectile.Center.Y), new Vector2(perturbedSpeed.X, perturbedSpeed.Y), ProjectileID.GiantBee, Projectile.damage, 0, Projectile.owner);
+                    SpawnAWasp();
                 }
-                else
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(Projectile.Center.X, Projectile.Center.Y), new Vector2(perturbedSpeed.X, perturbedSpeed.Y), ProjectileID.Bee, Projectile.damage, 0, Projectile.owner);
-
             }
+            SpawnAWasp();
+        }
+
+        public void SpawnAWasp()
+        {
+            Vector2 perturbedSpeed = new Vector2(0, -6).RotatedByRandom(MathHelper.ToRadians(360));
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(Projectile.Center.X, Projectile.Center.Y), new Vector2(perturbedSpeed.X, perturbedSpeed.Y), ProjectileID.Wasp, (2 * Projectile.damage) / 3, 0, Projectile.owner);
         }
     }
 }
