@@ -46,7 +46,7 @@ namespace Conquest.Assets.Systems
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            tooltips.Add(new(Mod, "", "Can be shimmered after killing skeletron"));
+            tooltips.Add(new(Mod, "", "Can be shimmered after killing Skeletron"));
         }
     }
     public class RottedForkGlobal : GlobalItem

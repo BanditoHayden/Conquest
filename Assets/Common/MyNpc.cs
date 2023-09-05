@@ -17,7 +17,7 @@ namespace Conquest.Assets.Common
 {
     public class MyNpc : GlobalNPC
     {
-        public bool Electrified = false;
+        public int electrifiedTier = 0;
         private float velocityIntensity = 0.01f;
         private int oldAI;
         private bool oldAIisStored;
@@ -32,7 +32,7 @@ namespace Conquest.Assets.Common
 
         public override void ResetEffects(NPC npc)
         {
-            Electrified = false;
+            electrifiedTier = 0;
             if (npc.GetGlobalNPC<MyNpc>().minionMark > 0)
             {
                 if (npc.GetGlobalNPC<MyNpc>().minionMark == 1)
@@ -61,16 +61,16 @@ namespace Conquest.Assets.Common
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
-            if (Electrified)
+            if (electrifiedTier > 0)
             {
                 if (npc.lifeRegen > 0)
                 {
                     npc.lifeRegen = 0;
                 }
-                npc.lifeRegen -= 70;
-                if (damage < 10)
+                npc.lifeRegen -= 70 * electrifiedTier;
+                if (damage < 10 * electrifiedTier)
                 {
-                    damage = 10;
+                    damage = 10 * electrifiedTier;
                 }
             }
         }
@@ -141,10 +141,13 @@ namespace Conquest.Assets.Common
         }
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
-            if (Electrified)
+            if (electrifiedTier > 0)
             {
-                int dust = Dust.NewDust(npc.position, npc.width, npc.height, 226, npc.velocity.X * 0f, npc.velocity.Y * 0f, 100, default(Color), .4f);
-                Main.dust[dust].noGravity = true;
+                for (int i = 0; i < electrifiedTier; i++)
+                {
+                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, 226, npc.velocity.X * 0f, npc.velocity.Y * 0f, 100, default(Color), .4f);
+                    Main.dust[dust].noGravity = true;
+                }
             }
         }
     }

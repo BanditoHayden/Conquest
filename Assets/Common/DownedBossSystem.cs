@@ -15,8 +15,6 @@ namespace Conquest.Assets.Systems
         public static bool DownedDuke = false;
         public static bool DownedAnubis = false;
         public static bool DownedBruiser = false;
-        public static bool DownedQueen = false;
-
         public override void SaveWorldData(TagCompound tag)
         {
             if (DownedDuke)
@@ -31,26 +29,18 @@ namespace Conquest.Assets.Systems
             {
                 tag["DownedAnubis"] = true;
             }
-            if (DownedQueen)
-            {
-                tag["DownedQueen"] = true;
-            }
         }
         public override void ClearWorld()
         {
             DownedAnubis = false;
             DownedBruiser = false;
             DownedDuke = false;
-            DownedQueen = false;
-
         }
         public override void LoadWorldData(TagCompound tag)
         {
             DownedDuke = tag.ContainsKey("DownedDuke");
             DownedBruiser = tag.ContainsKey("DownedBruiser");
             DownedAnubis = tag.ContainsKey("DownedAnubis");
-            DownedQueen = tag.ContainsKey("DownedQueen");
-
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -59,7 +49,6 @@ namespace Conquest.Assets.Systems
             flags[0] = DownedDuke;
             flags[1] = DownedBruiser;
             flags[2] = DownedAnubis;
-            flags[3] = DownedQueen;
             writer.Write(flags);
         }
 
@@ -69,8 +58,6 @@ namespace Conquest.Assets.Systems
             DownedDuke = flags[0];
             DownedBruiser = flags[1];
             DownedAnubis= flags[2];
-            DownedQueen = flags[3];
-
         }
     }
 }
