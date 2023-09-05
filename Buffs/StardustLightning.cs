@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Conquest.Buffs
 {
-    public class Electrified2 : ModBuff
+    public class StardustLightning : ModBuff
     {
         public override void SetStaticDefaults()
         {
@@ -23,7 +23,7 @@ namespace Conquest.Buffs
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<MyNpc>().electrifiedTier = 1;
+            npc.GetGlobalNPC<MyNpc>().electrifiedTier = 3;
         }
     }
 }
