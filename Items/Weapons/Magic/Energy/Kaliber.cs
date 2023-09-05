@@ -37,13 +37,20 @@ public class Kaliber : EnergyWeapon
         Item.useAnimation = 20;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.noUseGraphic = false;
-        Item.damage = 26;
+        Item.damage = 78;
         Item.knockBack = 1f;
         Item.DamageType = DamageClass.Magic;
 		Item.shoot = ModContent.ProjectileType<KaliberBolt>();
 		Item.shootSpeed = 8;
 		Item.autoReuse = true;
-	}
+        Item.noMelee = true;
+        Item.ArmorPenetration = 999;
+    }
+
+    public override Vector2? HoldoutOffset()
+    {
+        return new Vector2(-4, 0);
+    }
 
     int shotsFired = 0;
     public override void UpdateInventory(Player player)
@@ -51,7 +58,7 @@ public class Kaliber : EnergyWeapon
         float energy = player.GetModPlayer<EnergyPlayer>().energyPower;
         Item.useTime = 1;
         Item.useAnimation = (int)MathF.Round(21 - (3 * energy));
-        if (Item.useAnimation < 10) Item.useAnimation = 10;
+        if (Item.useAnimation < 10) Item.useAnimation = 12;
     }
 
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

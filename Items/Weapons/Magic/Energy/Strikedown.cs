@@ -15,7 +15,7 @@ using Mono.Cecil;
 
 namespace Conquest.Items.Weapons.Magic.Energy;
 
-public class Marksman : EnergyWeapon
+public class Strikedown : EnergyWeapon
 {
     SoundStyle RetroBlast = new SoundStyle($"{nameof(Conquest)}/Assets/Sounds/Retro_Blast")
     {
@@ -23,45 +23,43 @@ public class Marksman : EnergyWeapon
         PitchVariance = 0.2f,
         MaxInstances = 3,
     };
-        
 
 	public override void SetDefaults()
     {
-        Item.scale = 1.5f;
 		Item.width = 26; 
-        Item.height = 8;
+        Item.height = 13;
         Item.value = 1000;
         Item.noMelee = true;
         Item.rare = ItemRarityID.Pink;
-        Item.mana = 27;
+        Item.mana = 20;
         Item.useTime = 1;
-        Item.useAnimation = 75;
+        Item.useAnimation = 35;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.noUseGraphic = false;
-        Item.damage = 263;
-        Item.knockBack = 6f;
+        Item.damage = 50;
+        Item.knockBack = 6.5f;
         Item.DamageType = DamageClass.Magic;
-		Item.shoot = ModContent.ProjectileType<MarksmanBolt>();
+		Item.shoot = ModContent.ProjectileType<StrikedownBolt>();
 		Item.shootSpeed = 8;
+		Item.autoReuse = true;
         Item.ArmorPenetration = 999;
-        Item.autoReuse = true;
+        knockbackScale = 2f;
         Item.noMelee = true;
     }
 
     public override Vector2? HoldoutOffset()
     {
-        return new Vector2(-8, 0);
+        return new Vector2(-2, -1);
     }
 
     int shotsFired = 0;
-
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
     {
         if (shotsFired == 0) SoundEngine.PlaySound(SoundID.Item43, position);
-        if (shotsFired % 3 == 0 && shotsFired < 20)
+        if (shotsFired % 3 == 0 && shotsFired < 15)
         {
             Vector2 oldPos = position;
-            type = ModContent.ProjectileType<MarksmanSpawnBolt>();
+            type = ModContent.ProjectileType<StrikedownSpawnBolt>();
             float ringWidth = Main.rand.NextFloat(200f, 220f);
             position += Main.rand.NextVector2CircularEdge(ringWidth, ringWidth);
         }
@@ -73,9 +71,11 @@ public class Marksman : EnergyWeapon
         {
             SoundEngine.PlaySound(RetroBlast, position);
             float energy = player.GetModPlayer<EnergyPlayer>().energyPower;
-            for (int i = 0; i < (int)energy - 1; i++)
+            for (int i = 0; i < 5 + (int)energy; i++)
             {
-                Projectile.NewProjectileDirect(player.GetSource_ItemUse(Item), position, velocity, type, damage, knockback, player.whoAmI);
+                Projectile.NewProjectileDirect(player.GetSource_ItemUse(Item),
+                    position, velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15f, 15f))),
+                    type, damage, knockback, player.whoAmI);
             }
         }
         shotsFired++;
@@ -83,13 +83,13 @@ public class Marksman : EnergyWeapon
     }
 }
 
-public class MarksmanSpawning : GlobalNPC
+public class StrikedownSpawning : GlobalNPC
 {
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
-        if (npc.type == NPCID.SkeletronPrime)
+        if (npc.type == NPCID.Retinazer || npc.type == NPCID.Spazmatism)
         {
-            npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Marksman>(), 5, 3));
+            npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Strikedown>(), 5, 3));
         }
     }
 }
