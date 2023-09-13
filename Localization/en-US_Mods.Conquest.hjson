@@ -1231,6 +1231,11 @@ Items: {
 		DisplayName: Stygian Blade
 		Tooltip: ""
 	}
+
+	AbhorrentMeat: {
+		Tooltip: ""
+		DisplayName: Abhorrent Meat
+	}
 }
 
 Projectiles: {
@@ -1653,7 +1658,7 @@ NPCs: {
 		Census.SpawnCondition: Conditions unknown
 	}
 
-	BeholderEnemy.DisplayName: Beholder 
+	BeholderEnemy.DisplayName: Beholder
 }
 
 DamageClasses.FoudreDamageClass.DisplayName: melee/ranged Damage

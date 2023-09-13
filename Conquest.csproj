@@ -15,6 +15,7 @@
     <None Remove="Buffs\Electrified.png" />
     <None Remove="Buffs\Overheat.png" />
     <None Remove="Buffs\RatKingsCurse.png" />
+    <None Remove="Items\Materials\AbhorrentMeat.png" />
     <None Remove="Items\Vanity\Dragon\DwagonCosplayMask.png" />
     <None Remove="Items\Vanity\Dragon\DwagonCosplayMask_Head.png" />
     <None Remove="Items\Vanity\Dragon\DwagonCosplayPants.png" />

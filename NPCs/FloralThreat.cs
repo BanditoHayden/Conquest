@@ -245,7 +245,7 @@ namespace Conquest.NPCs
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneJungle && NPC.CountNPCS(ModContent.NPCType<FloralThreat>()) == 3)
+            if (spawnInfo.Player.ZoneJungle && NPC.CountNPCS(ModContent.NPCType<FloralThreat>()) != 3)
             {
                 return 0.1f;
             }

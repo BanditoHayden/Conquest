@@ -26,7 +26,7 @@ namespace Conquest.NPCs.Miniboss.Beholder
             NPC.height = 122;
             NPC.damage = 20;
             NPC.defense = 30;
-            NPC.lifeMax = 100;
+            NPC.lifeMax = 1200;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.value = 500f;
@@ -68,12 +68,12 @@ namespace Conquest.NPCs.Miniboss.Beholder
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (NPC.CountNPCS(ModContent.NPCType<BeholderEnemy>()) == 2)
+            if (NPC.CountNPCS(ModContent.NPCType<BeholderEnemy>()) != 2 && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
             {
-                return SpawnCondition.Underworld.Chance * 0f;
+                return SpawnCondition.Underworld.Chance * 0.001f;
             }
-            else
-                return SpawnCondition.Underworld.Chance * 0.01f;
+            else 
+            return SpawnCondition.Underworld.Chance * 0f;
         }
         private void DoFirstStage(Player player)
         {
