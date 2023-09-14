@@ -275,7 +275,7 @@ public class LivingShadow : ModNPC
         Player player = Main.player[NPC.target];
 
         // TODO: Find the tick amount before the drop on a non-shitty computer
-        if (timerBeforeStart <= 800)
+        if (timerBeforeStart <= 624)
         {
             distance = MathHelper.Lerp(distance, 100, 0.001f);
             angle = MathF.PI / 2;
