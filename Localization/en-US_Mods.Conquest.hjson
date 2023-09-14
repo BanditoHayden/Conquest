@@ -1254,8 +1254,16 @@ Items: {
 	}
 
 	EnergyDiagnostic: {
-		DisplayName: Energy Diagnostic
-		Tooltip: Displays the latent magical energy around the player
+		DisplayName: Energy Potency Scanner
+		Tooltip:
+			'''
+			Displays the latent energy potency near the player
+			Certain biomes, blocks, weather, and candles can alter the latent energy potency
+			'Magical energy is woven into the fabric of the
+			world. Certain types of magic weapons are capable
+			of utilising the latent magic power of Terraria to
+			enhance their power
+			'''
 	}
 
 	EldritchTide: {
