@@ -11,6 +11,8 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
+using static Terraria.ModLoader.ModContent;
+using Conquest.Items;
 
 namespace Conquest.NPCs.Bosses.LivingShadow;
 
@@ -142,14 +144,26 @@ public class LivingShadow : ModNPC
     {
         // Sets the description of this NPC that is listed in the bestiary
         bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-            new MoonLordPortraitBackgroundProviderBestiaryInfoElement(), // Plain black background
-				new FlavorTextBestiaryInfoElement("A dark reflection of the player, brought out through the magic of a cursed mirror. " +
-                                                  "The strongest of the four anemoi.")
+            new BossBestiaryInfoElement(), // Plain black background
+				new FlavorTextBestiaryInfoElement("A dark reflection of the player, brought out through the magic of a cursed mirror.")
         });
     }
 
+
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
+        int[] normalWeaponDrops = new int[]
+        {
+            ItemType<Items.Weapons.Melee.Nightfall>(),
+            ItemType<Items.Weapons.Ranged.GammaRay>(),
+            ItemType<Items.Weapons.Magic.StellarRemnant>(),
+            ItemType<Items.Weapons.Summon.EchoingStarlash>(),
+        };
+
+        npcLoot.Add(ItemDropRule.FewFromOptionsNotScalingWithLuck(Main.expertMode ? 2 : 1, 1, normalWeaponDrops));
+
+        npcLoot.Add(ItemDropRule.NotScalingWithLuck(ItemType<Drops.Pitchblende.Reflector>(), hasBecomeDaytime ? 100000 : 1));
+
         npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Drops.Tiles.Trophy.LivingShadowTrophy>(), 10));
 
         //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Materials.ShadowDrop.ShadowDrop>(), 1, 18, 36));

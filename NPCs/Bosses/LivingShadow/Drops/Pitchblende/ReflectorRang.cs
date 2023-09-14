@@ -6,11 +6,19 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
+using Conquest.Assets.Common;
+using Terraria.GameContent;
 
 namespace Conquest.NPCs.Bosses.LivingShadow.Drops.Pitchblende;
 
 public class ReflectorRang : ModProjectile
 {
+    public override void SetStaticDefaults()
+    {
+        ProjectileID.Sets.TrailCacheLength[Type] = 10;
+        ProjectileID.Sets.TrailingMode[Type] = 2;
+    }
+
     public override void SetDefaults()
     {
         Projectile.width = 19;
@@ -37,13 +45,34 @@ public class ReflectorRang : ModProjectile
 
     public override bool OnTileCollide(Vector2 oldVelocity)
     {
-        Projectile.velocity *= -1;
+        if (Projectile.velocity.X != oldVelocity.X) Projectile.velocity.X *= -1;
+        if (Projectile.velocity.Y != oldVelocity.Y) Projectile.velocity.Y *= -1;
         return false;
     }
 
-    public override Color? GetAlpha(Color lightColor)
+    float rotation = 0;
+
+    public override bool PreDraw(ref Color lightColor)
     {
-        return Color.White;
+        Main.instance.LoadProjectile(Projectile.type);
+        Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+
+        // Redraw the projectile with the color not influenced by light
+        Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height * 0.5f);
+
+        Vector2 drawPos = (Projectile.position - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+        Main.EntitySpriteDraw(texture, drawPos, null, Projectile.GetAlpha(lightColor), rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+        rotation += thing * MathHelper.ToRadians(4 * MathF.Sqrt(Projectile.ai[0]));
+
+        if (closeNPC != null && hitCounter <= 6)
+        {
+            default(Effects.WhiteTrailRotationless).Draw(Projectile);
+        }
+        else
+        {
+            default(Effects.BlackTrailRotationless).Draw(Projectile);
+        }
+        return false;
     }
 
     float thing = Main.rand.NextFloat(0.7f, 1.5f);
@@ -83,10 +112,6 @@ public class ReflectorRang : ModProjectile
     {
         Lighting.AddLight(Projectile.position, new Vector3(0.4f, 0.4f, 0.8f));
         Vector2 offset = new Vector2(8, 0);
-        if (Main.rand.NextBool())
-            Dust.NewDustDirect(Projectile.Center + (offset.RotatedBy(Projectile.rotation)), 1, 1, dustType, Scale: dustScale).noGravity = true;
-        if (Main.rand.NextBool())
-            Dust.NewDustDirect(Projectile.Center + (offset.RotatedBy(Projectile.rotation + MathF.PI)), 1, 1, dustType, Scale: dustScale).noGravity = true;
 
         if (Projectile.ai[0] > 250) Projectile.tileCollide = false;
         if (Projectile.ai[0] == 0 && Main.rand.NextBool()) thing *= -1;
@@ -94,16 +119,12 @@ public class ReflectorRang : ModProjectile
 
         if (closeNPC == null || hitCounter > 6)
         {
-            dustType = DustID.Wraith;
-            dustScale = 2f;
             ChooseNPC();
-            if (Projectile.Distance(Main.player[Projectile.owner].position) > 12 || Projectile.ai[0] < 40) Projectile.velocity = Vector2.Lerp(Projectile.velocity, toTarget, 0.1f);
+            if (closeNPC == null || Projectile.Distance(Main.player[Projectile.owner].position) > 12 || Projectile.ai[0] < 40) Projectile.velocity = Vector2.Lerp(Projectile.velocity, toTarget, 0.1f);
             else Projectile.position = Vector2.Lerp(Projectile.velocity, Main.player[Projectile.owner].position, 0.1f);
         }
         else
         {
-            dustType = DustID.SilverFlame;
-            dustScale = 3f;
             UnchooseNPC();
             if (closeNPC != null)
             {
@@ -111,9 +132,6 @@ public class ReflectorRang : ModProjectile
                 Projectile.velocity = Vector2.Lerp(Projectile.velocity, toNPC, 0.1f);
             }
         }
-
-        
-        Projectile.rotation += thing * MathHelper.ToRadians(4 * MathF.Sqrt(Projectile.ai[0]));
 
         if (Projectile.Distance(Main.player[Projectile.owner].position) < 24 && Projectile.ai[0] > 40)
         {

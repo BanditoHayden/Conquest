@@ -21,7 +21,7 @@ public class Reflector : ModItem
     {
         Item.width = 19;
         Item.height = 19;
-        //Item.rare = ModContent.RarityType<Items.Summons.ShadowRarity>();
+        Item.rare = ModContent.RarityType<Assets.Common.ArtifactRarity>();
 
         Item.damage = 193;
         Item.DamageType = DamageClass.Melee;
