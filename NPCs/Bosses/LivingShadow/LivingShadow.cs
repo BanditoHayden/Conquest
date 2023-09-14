@@ -135,8 +135,9 @@ public class LivingShadow : ModNPC
         // The following code assigns a music track to the boss in a simple way.
         if (!Main.dedServ)
         {
-            if (Main.dayTime) Music = MusicLoader.GetMusicSlot(Mod, "Music/Introspectral");
-            else Music = MusicLoader.GetMusicSlot(Mod, "Music/Psychotortured");
+
+            if (Main.dayTime) Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Introspectral");
+            else Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Psychotortured");
         }
     }
 
@@ -273,9 +274,11 @@ public class LivingShadow : ModNPC
 
         Player player = Main.player[NPC.target];
 
-        if (timerBeforeStart <= 624)
+        // TODO: Find the tick amount before the drop on a non-shitty computer
+        if (timerBeforeStart <= 800)
         {
-            distance = MathHelper.Lerp(distance, 100, 0.001f) * player.direction;
+            distance = MathHelper.Lerp(distance, 100, 0.001f);
+            angle = MathF.PI / 2;
         }
         else
         {

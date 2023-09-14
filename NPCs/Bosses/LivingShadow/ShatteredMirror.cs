@@ -29,8 +29,8 @@ public class ShatteredMirror : ModItem
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
-        if (Main.dayTime) tooltips.Insert(4, new TooltipLine(Mod, "Tooltip0", "Broken by extraterrestrial powers, this mirror now awakens a powerful being"));
-        else tooltips.Insert(4, new TooltipLine(Mod, "Tooltip0", "Are you ready for what will be released?"));
+        if (Main.dayTime) tooltips.Add(new TooltipLine(Mod, "Tooltip0", "Broken by extraterrestrial powers, the magic of the mirror now awakens a powerful being"));
+        else tooltips.Add(new TooltipLine(Mod, "Tooltip0", "Are you ready for what will be released?"));
     }
 
     public override bool CanUseItem(Player player)
