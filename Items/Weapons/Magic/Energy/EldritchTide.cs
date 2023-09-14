@@ -69,4 +69,13 @@ public class EldritchTide : EnergyWeapon
                 shotsFired++;
         shotsFired = shotsFired % Item.useAnimation;
     }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient(ItemID.MeteorStaff)
+            .AddIngredient(ItemID.MartianConduitPlating, 40)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+    }
 }

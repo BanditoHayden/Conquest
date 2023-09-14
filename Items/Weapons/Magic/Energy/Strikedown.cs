@@ -73,6 +73,7 @@ public class Strikedown : EnergyWeapon
             float energy = player.GetModPlayer<EnergyPlayer>().energyPower;
             for (int i = 0; i < 5 + (int)energy; i++)
             {
+                velocity *= Main.rand.NextFloat(0.85f, 1.15f);
                 Projectile.NewProjectileDirect(player.GetSource_ItemUse(Item),
                     position, velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15f, 15f))),
                     type, damage, knockback, player.whoAmI);

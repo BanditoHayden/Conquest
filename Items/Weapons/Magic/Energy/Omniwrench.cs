@@ -77,4 +77,13 @@ public class Omniwrench : EnergyWeapon
         shotsFired++;
         shotsFired = shotsFired % Item.useAnimation;
     }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient(ItemID.RainbowRod)
+            .AddIngredient(ItemID.MartianConduitPlating, 40)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+    }
 }
