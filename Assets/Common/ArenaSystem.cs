@@ -201,10 +201,12 @@ public class ArenaSystem : ModSystem
 
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
-            if (source.Context == "Conquest/ArenaEnemy")
-            {
-                isArenaEnemy = true;
-            }
+	    if (source != null) {
+            	if (source.Context == "Conquest/ArenaEnemy")
+            	{
+                    isArenaEnemy = true;
+            	}
+	    }
             base.OnSpawn(npc, source);
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
