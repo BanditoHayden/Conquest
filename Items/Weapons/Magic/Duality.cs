@@ -55,12 +55,7 @@ namespace Conquest.Items.Weapons.Magic
                 // Be wary of dividing by zero when projectileCount is 1
                 float waveOffset = i / (float)(projectileCount - 1);
 
-                Projectile projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
-
-                SineWave modProjectile = projectile.ModProjectile as SineWave;
-                modProjectile.waveOffset = waveOffset * (1f - 1f / projectileCount);
-                modProjectile.drawColor = colors[i];
-
+                Projectile projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, 0, waveOffset * (1f - 1f / projectileCount), i);
             }
 
             return false;

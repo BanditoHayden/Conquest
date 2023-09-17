@@ -85,9 +85,7 @@ namespace Conquest.Projectiles.Ranged
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Player player = Main.player[Main.myPlayer];
-            MyPlayer modPlayer = player.GetModPlayer<MyPlayer>();
-            player.GetModPlayer<MyPlayer>().ScreenShake = 6;
+            Main.player[Projectile.owner].GetModPlayer<MyPlayer>().ScreenShake = 6; //use projectle's owner :)
             Projectile.penetrate--;
             if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
             {
