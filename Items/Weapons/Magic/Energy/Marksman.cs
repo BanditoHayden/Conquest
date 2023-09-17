@@ -33,18 +33,20 @@ public class Marksman : EnergyWeapon
         Item.value = 1000;
         Item.noMelee = true;
         Item.rare = ItemRarityID.Pink;
-        Item.mana = 12;
+        Item.mana = 27;
         Item.useTime = 1;
         Item.useAnimation = 75;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.noUseGraphic = false;
-        Item.damage = 100;
+        Item.damage = 263;
         Item.knockBack = 6f;
         Item.DamageType = DamageClass.Magic;
 		Item.shoot = ModContent.ProjectileType<MarksmanBolt>();
 		Item.shootSpeed = 8;
-		Item.autoReuse = true;
-	}
+        Item.ArmorPenetration = 999;
+        Item.autoReuse = true;
+        Item.noMelee = true;
+    }
 
     public override Vector2? HoldoutOffset()
     {

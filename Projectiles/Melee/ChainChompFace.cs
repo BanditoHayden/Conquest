@@ -35,9 +35,24 @@ namespace Conquest.Projectiles.Melee
             Projectile.localNPCHitCooldown = 30;
 			Projectile.aiStyle = 15;
 		}
-		public override void AI()
+		bool hit = false, thrown = false;
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (!hit && thrown) SoundEngine.PlaySound(ChompYelp, Projectile.position);
+			hit = true;
+            return base.OnTileCollide(oldVelocity);
+        }
+
+        public override void AI()
 		{
 			var player = Main.player[Projectile.owner];
+
+			if (!player.channel && !thrown)
+            {
+				thrown = true;
+				SoundEngine.PlaySound(SoundID.Item1);
+            }
 
 			// If owner player dies, remove the flail.
 			if (player.dead) {
