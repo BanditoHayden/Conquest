@@ -37,7 +37,7 @@ namespace Conquest.Items.Accessory
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient(ModContent.ItemType<DeathstalkerShell>(), 3)
+            .AddIngredient(ModContent.ItemType<DeathstalkerShell>(), 1)
            .AddIngredient(ItemID.Bottle, 1)
            .AddIngredient(ItemID.Waterleaf, 3)
 

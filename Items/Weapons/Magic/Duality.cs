@@ -68,8 +68,8 @@ namespace Conquest.Items.Weapons.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-           .AddIngredient(ItemID.LightShard, 5)
-            .AddIngredient(ItemID.DarkShard, 5)
+           .AddIngredient(ItemID.LightShard, 1)
+            .AddIngredient(ItemID.DarkShard, 1)
            .AddTile(TileID.MythrilAnvil)
            .Register();
         }

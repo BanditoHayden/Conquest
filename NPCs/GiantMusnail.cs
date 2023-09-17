@@ -66,7 +66,7 @@ namespace Conquest.NPCs
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.SpawnTileType == TileID.MushroomGrass && NPC.CountNPCS(ModContent.NPCType<GiantMusnail>()) == 3)
+            if (spawnInfo.SpawnTileType == TileID.MushroomGrass && NPC.CountNPCS(ModContent.NPCType<GiantMusnail>()) != 3)
             {
                 return 0.1f;
             }

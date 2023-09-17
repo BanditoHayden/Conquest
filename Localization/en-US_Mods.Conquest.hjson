@@ -1342,6 +1342,9 @@ Items: {
 	ShatteredMirror: {
 		Tooltip: ""
 		DisplayName: Shattered Mirror
+	AbhorrentMeat: {
+		Tooltip: ""
+		DisplayName: Abhorrent Meat
 	}
 }
 
@@ -1786,6 +1789,7 @@ NPCs: {
 	ShadowBoltIII.DisplayName: Shadow Bolt
 	ShadowBoltIV.DisplayName: Shadow Bolt
 	ShadowBoltV.DisplayName: Shadow Bolt
+	BeholderEnemy.DisplayName: Beholder
 }
 
 DamageClasses.FoudreDamageClass.DisplayName: melee/ranged Damage
