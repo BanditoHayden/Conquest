@@ -224,6 +224,16 @@ Items: {
 		Tooltip: ""
 	}
 
+	Kaliber: {
+		DisplayName: Kaliber
+		Tooltip:
+			'''
+			A compact energy-based pistol
+			Increases in power with latent magical energy
+			High energy will increase the weapon's rate of fire
+			'''
+	}
+
 	Armored: {
 		DisplayName: Laser Pistol
 		Tooltip:
@@ -321,6 +331,15 @@ Items: {
 		Tooltip: Charges up tortoises
 	}
 
+	TimestreamRevolver: {
+		DisplayName: Timestream Revolver
+		Tooltip:
+			'''
+			Alt Fire rewinds your bullets in time
+			'Now that's fowl'
+			'''
+	}
+
 	WindSong: {
 		DisplayName: Wind Song
 		Tooltip: Fires enchanted air bolts from behind the player
@@ -353,6 +372,44 @@ Items: {
 			Summons a Servant of Cthulhu to fight for you
 			'BOOM BOOM. Ding ding ding ding ding ding ding. Ding-ding-ding.'
 			'''
+	}
+
+	StellarRemnant: {
+		DisplayName: Stellar Remnant
+		Tooltip:
+			'''
+			Casts a torrent of dark energy that drains the user's life
+			Cannot be used under the effects of Mana Sickness
+			'''
+	}
+
+	Nightfall: {
+		DisplayName: Nightfall
+		Tooltip:
+			'''
+			Strikes foes with a spear of shadows
+			Damage scales with attack speed
+			'''
+	}
+
+	GammaRay: {
+		DisplayName: Gamma Ray
+		Tooltip:
+			'''
+			Energizes gel into a powerful beam
+			Hitting enemies charges up the weapon, increasing fire rate
+			Right-click to expend stored charge in a burst
+			'''
+	}
+
+	EchoingStarlash: {
+		Tooltip:
+			'''
+			Your summons will focus struck enemies
+			Strike enemies to empower your minions
+			Empowered minion hits will create a connecting minefield
+			'''
+		DisplayName: Echoing Starlash
 	}
 
 	Amalgam: {
@@ -1191,13 +1248,9 @@ Items: {
 		Tooltip: ""
 	}
 
-	Kaliber: {
-		DisplayName: Kaliber
-		Tooltip:
-			'''
-			Powers up with latent energy
-			Higher energy increases firerate
-			'''
+	UniversalReceiver: {
+		DisplayName: Universal Receiver
+		Tooltip: ""
 	}
 
 	EnergyDiagnostic: {
@@ -1213,13 +1266,97 @@ Items: {
 			'''
 	}
 
+	EldritchTide: {
+		DisplayName: Eldritch Tide
+		Tooltip:
+			'''
+			Casts an energy bolt that creates a wave underneath it
+			Increases in power with latent magical energy
+			'''
+	}
+
 	Marksman: {
 		DisplayName: Marksman
 		Tooltip:
 			'''
-			Powers up with latent energy
-			Higher energy adds hits to each bolt
+			A powerful energy-based rifle
+			Increases in power with latent magical energy
+			High energy will cause the weapon to strike enemies more
 			'''
+	}
+
+	Omniwrench: {
+		DisplayName: Omniwrench
+		Tooltip:
+			'''
+			Fires a short-ranged spread of electricity
+			Increases in power with latent magical energy
+			'''
+	}
+
+	Strikedown: {
+		DisplayName: Strikedown
+		Tooltip:
+			'''
+			A lightweight energy-based shotgun
+			Increases in power with latent magical energy
+			High energy will cause the weapon to fire more bolts
+			'''
+	}
+
+	FloweringSun: {
+		DisplayName: Flowering Sun
+		Tooltip: super broken
+	}
+
+	UnsafetyScissors: {
+		Tooltip: ""
+		DisplayName: Unsafety Scissors
+	}
+
+	Puffer: {
+		DisplayName: Puffer
+		Tooltip: super broken
+	}
+
+	Reflector: {
+		DisplayName: Reflector
+		Tooltip: ""
+	}
+
+	LivingShadowRelicItem: {
+		DisplayName: Living Shadow Relic
+		Tooltip: ""
+	}
+
+	LivingShadowTrophy: {
+		DisplayName: Living Shadow Trophy
+		Tooltip: ""
+	}
+
+	BlackDwarfStaff: {
+		DisplayName: Black Dwarf Staff
+		Tooltip: ""
+	}
+
+	ShatteredMirror: {
+		Tooltip: ""
+		DisplayName: Shattered Mirror
+	}
+
+	AbhorrentMeat: {
+		Tooltip: ""
+		DisplayName: Abhorrent Meat
+	}
+
+	Staff: {
+		DisplayName: Staff
+		Tooltip: ""
+	}
+
+	Staff2: {
+		DisplayName: Staff2
+		Tooltip: ""
 	}
 
 	HaloScythe: {
@@ -1230,11 +1367,6 @@ Items: {
 	StygianBlade: {
 		DisplayName: Stygian Blade
 		Tooltip: ""
-	}
-
-	AbhorrentMeat: {
-		Tooltip: ""
-		DisplayName: Abhorrent Meat
 	}
 }
 
@@ -1361,11 +1493,37 @@ Projectiles: {
 	NatureTentacle.DisplayName: Nature Tentacle
 	SoulTentacle.DisplayName: Soul Tentacle
 	SpaceRay.DisplayName: Space Ray
-	FireBullet.DisplayName: Fire Bullet
-	KaliberBolt.DisplayName: Kaliber Bolt
-	KaliberSpawnBolt.DisplayName: Kaliber Spawn Bolt
-	MarksmanBolt.DisplayName: Marksman Bolt
-	MarksmanSpawnBolt.DisplayName: Marksman Spawn Bolt
+	FireBullet.DisplayName: Pain Train
+	UnusedAeroWind.DisplayName: Unused Aero Wind
+	UnusedAeroScim.DisplayName: Unused Aero Scim
+	AnubisHammerShadow.DisplayName: Anubis Hammer
+	CardboardSheet.DisplayName: Cardboard Sheet
+	CosmoboxShot.DisplayName: Cosmobox
+	KaliberBolt.DisplayName: Kaliber
+	EldritchSpawnBolt.DisplayName: Eldritch Tide
+	EldritchStarter.DisplayName: Eldritch Tide
+	EldritchWave.DisplayName: Eldritch Wave
+	KaliberSpawnBolt.DisplayName: Kaliber
+	LightningBolt.DisplayName: Omniwrench
+	LightningSpawnBolt.DisplayName: Omniwrench
+	MarksmanBolt.DisplayName: Marksman
+	MarksmanSpawnBolt.DisplayName: Marksman
+	StrikedownBolt.DisplayName: Strikedown
+	StrikedownSpawnBolt.DisplayName: Strikedown
+	TRevolverShot.DisplayName: T Revolver Shot
+	FloweringSunSentry.DisplayName: Flowering Sun Sentry
+	HealingSun.DisplayName: Healing Sun
+	PufferHold.DisplayName: Puffer
+	ReflectorRang.DisplayName: Reflector
+	GammaRayProjectile.DisplayName: Gamma Ray
+	NightfallExplosion.DisplayName: Nightfall
+	NightfallProjectile.DisplayName: Nightfall
+	StellarRemnantProjectile.DisplayName: Stellar Remnant
+	EchoingStarlashWhip.DisplayName: Echoing Starlash
+	EchoingStarlashMine.DisplayName: Echoing Starlash
+	EchoingStarlashField.DisplayName: Echoing Starlash Field
+	Staff2Projectile.DisplayName: Staff2 Projectile
+	StaffProjectile.DisplayName: Staff Projectile
 	Halo.DisplayName: Halo
 	HaloScytheProj.DisplayName: Halo Scythe Proj
 	SBS.DisplayName: S B S
@@ -1381,7 +1539,7 @@ Buffs: {
 
 	Bones: {
 		DisplayName: Broken Bones
-		Description: Mods.Conquest.Buffs.BrokenBones.Description
+		Description: Your bones are broken! Ouch
 	}
 
 	BrokenBones2: {
@@ -1396,12 +1554,12 @@ Buffs: {
 
 	BrokenBones: {
 		DisplayName: Broken Bones
-		Description: Mods.Conquest.Buffs.BrokenBones.Description
+		Description: Your bones are broken! Ouch
 	}
 
 	Cursed: {
 		DisplayName: Cursed
-		Description: Mods.Conquest.Buffs.Cursed.Description
+		Description: That's pretty cursed
 	}
 
 	Electrified2: {
@@ -1416,7 +1574,7 @@ Buffs: {
 
 	Electrified: {
 		DisplayName: Electrified
-		Description: Mods.Conquest.Buffs.Electrified.Description
+		Description: bzzzz!
 	}
 
 	Overheat: {
@@ -1426,7 +1584,7 @@ Buffs: {
 
 	Immune: {
 		DisplayName: Immune
-		Description: Mods.Conquest.Buffs.Immune.Description
+		Description: You are immune! (Whatever that means)
 	}
 
 	Steamy: {
@@ -1446,6 +1604,11 @@ Buffs: {
 	MoonlightBlessing: {
 		DisplayName: Moonlight Blessing
 		Description: Increased Damage and Crit Chance
+	}
+
+	EchoingStarlashBuff: {
+		DisplayName: Echoing Starlash Buff
+		Description: Mods.Conquest.Buffs.EchoingStarlashBuff.Description
 	}
 
 	ShookBuff: {
@@ -1542,10 +1705,20 @@ Buffs: {
 		DisplayName: Lag
 		Description: You are lagging out!
 	}
+
+	VortexFlames: {
+		Description: Mods.Conquest.Buffs.VortexFlames.Description
+		DisplayName: Vortex Flames
+	}
+
+	StardustLightning: {
+		DisplayName: Stardust Lightning
+		Description: Mods.Conquest.Buffs.StardustLightning.Description
+	}
 }
 
 Keybinds: {
-	"Legendary Armament Activation.DisplayName": Weapon Ability Activation
+	"Legendary Armament Activation.DisplayName": Legendary  Armament  Activation
 	"Hunny Pot Activation.DisplayName": Hunny  Pot  Activation
 	"Cursed Trident Activation.DisplayName": Cursed  Trident  Activation
 	"Reload Weapon.DisplayName": Reload  Weapon
@@ -1554,23 +1727,8 @@ Keybinds: {
 Tiles.QueenLarva2.MapEntry: Queen Larva2
 
 NPCs: {
-	AntlionQueen: {
-		DisplayName: Antlion Queen
-
-		BossChecklistIntegration: {
-			EntryName: Antlion Queen
-			SpawnInfo: Found in the underground desert.
-		}
-	}
-
-	Anubis: {
-		DisplayName: Anubis
-
-		BossChecklistIntegration: {
-			EntryName: Anubis
-			SpawnInfo: Found in the depths of the Ancient City of Thebes (Desert Temple)
-		}
-	}
+	AntlionQueen.DisplayName: Antlion Queen
+	Anubis.DisplayName: Anubis
 
 	Dande: {
 		DisplayName: Dande
@@ -1588,15 +1746,7 @@ NPCs: {
 		}
 	}
 
-	DandukeBoss: {
-		DisplayName: Danduke
-
-		BossChecklistIntegration: {
-			EntryName: Danduke
-			SpawnInfo: Found in the Flower Field
-		}
-	}
-
+	DandukeBoss.DisplayName: Danduke
 	Deathstalker.DisplayName: Deathstalker
 	GiantMusnail.DisplayName: Giant Musnail
 	Ghostling.DisplayName: Ghostling
@@ -1658,6 +1808,16 @@ NPCs: {
 		Census.SpawnCondition: Conditions unknown
 	}
 
+	Sillyguy.DisplayName: Sillyguy
+	PetSillyguy.DisplayName: Pet Sillyguy
+	Goofball.DisplayName: Goofball
+	Bloodfin.DisplayName: Bloodfin
+	LivingShadow.DisplayName: Living Shadow
+	ShadowBolt.DisplayName: Shadow Bolt
+	ShadowBoltII.DisplayName: Shadow Bolt
+	ShadowBoltIII.DisplayName: Shadow Bolt
+	ShadowBoltIV.DisplayName: Shadow Bolt
+	ShadowBoltV.DisplayName: Shadow Bolt
 	BeholderEnemy.DisplayName: Beholder
 }
 
@@ -1665,12 +1825,12 @@ DamageClasses.FoudreDamageClass.DisplayName: melee/ranged Damage
 
 Biomes: {
 	DesertTempleBiome: {
-		TownNPCDialogueName: the Desert Temple Biome
-		DisplayName: Desert Temple Biome
+		TownNPCDialogueName: the Desert Temple
+		DisplayName: Desert Temple
 	}
 
 	DarkDawnBiome: {
-		DisplayName: Dark Dawn Biome
-		TownNPCDialogueName: the Dark Dawn Biome
+		DisplayName: Dark Dawn
+		TownNPCDialogueName: the Dark Dawn
 	}
 }

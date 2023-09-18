@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Conquest.Buffs;
+using Conquest.Assets.Common;
 
 namespace Conquest.Projectiles.Melee
 {
@@ -16,7 +17,7 @@ namespace Conquest.Projectiles.Melee
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         }
         public override void SetDefaults()
         {
@@ -70,6 +71,7 @@ namespace Conquest.Projectiles.Melee
 
         public override bool PreDraw(ref Color lightColor)
         {
+            /*
             Main.instance.LoadProjectile(Projectile.type);
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             SpriteEffects spriteEffects = SpriteEffects.None;
@@ -84,8 +86,10 @@ namespace Conquest.Projectiles.Melee
                 Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
+            */
+            default(Effects.CyanTrail).Draw(Projectile);
 
-            return true;
+            return false;
         }
 
     }

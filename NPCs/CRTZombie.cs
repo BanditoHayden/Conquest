@@ -18,7 +18,9 @@ namespace Conquest.NPCs
     {
         // changed by Goose
         // now a bit laggy
-        // Attacking the CRT Zombie lags the player
+        // ~~Attacking the CRT Zombie lags the player~~
+        // someone didn't want an interesting npc >:(
+        // now only getting hit will inflict Lag
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.Zombie];
@@ -47,14 +49,9 @@ namespace Conquest.NPCs
             else return 0f;
         }
 
-        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            player.AddBuff(ModContent.BuffType<Lag>(), 120);
-        }
-
-        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
-        {
-            Main.player[projectile.owner].AddBuff(ModContent.BuffType<Lag>(), 120);
+            target.AddBuff(ModContent.BuffType<Lag>(), 120);
         }
 
         public override void AI()

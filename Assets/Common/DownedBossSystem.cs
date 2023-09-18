@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-
 namespace Conquest.Assets.Systems
 {
     public class DownedBossSystem : ModSystem
@@ -74,4 +73,3 @@ namespace Conquest.Assets.Systems
         }
     }
 }
-

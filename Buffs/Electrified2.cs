@@ -23,7 +23,7 @@ namespace Conquest.Buffs
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<MyNpc>().Electrified = true;
+            npc.GetGlobalNPC<MyNpc>().electrifiedTier = 1;
         }
     }
 }
