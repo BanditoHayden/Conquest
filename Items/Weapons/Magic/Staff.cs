@@ -37,7 +37,7 @@ namespace Conquest.Items.Weapons.Magic
             Item.UseSound = SoundID.Item43;
             Item.autoReuse = true;
             // Weapon Properties
-            Item.damage = 30;
+            Item.damage = 15;
             Item.knockBack = 3f;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 9;
@@ -54,6 +54,22 @@ namespace Conquest.Items.Weapons.Magic
                 position += muzzleOffset;
             }
             base.ModifyShootStats(player, ref position, ref velocity, ref type, ref damage, ref knockback);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.WandofFrosting)
+                .AddIngredient(ItemID.BorealWood)
+                .AddIngredient(ItemID.CrimtaneBar)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.WandofFrosting)
+                .AddIngredient(ItemID.BorealWood)
+                .AddIngredient(ItemID.DemoniteBar)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
     public class StaffProjectile : ModProjectile
@@ -92,6 +108,11 @@ namespace Conquest.Items.Weapons.Magic
 
             //i was gonna make a lurch effect on this but couldnt get it to look good so i didnt
             base.AI();
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffID.Frostburn, 60);
+            base.OnHitNPC(target, hit, damageDone);
         }
     }
 }

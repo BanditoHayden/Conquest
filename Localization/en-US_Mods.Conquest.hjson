@@ -1368,6 +1368,29 @@ Items: {
 		DisplayName: Stygian Blade
 		Tooltip: ""
 	}
+<<<<<<< Updated upstream
+=======
+
+	AbhorrentMeat: {
+		Tooltip: ""
+		DisplayName: Abhorrent Meat
+	}
+
+	Staff: {
+		DisplayName: Staff
+		Tooltip: ""
+	}
+
+	Staff2: {
+		DisplayName: Staff2
+		Tooltip: ""
+	}
+
+	Staff3: {
+		DisplayName: Staff3
+		Tooltip: ""
+	}
+>>>>>>> Stashed changes
 }
 
 Projectiles: {
@@ -1529,6 +1552,9 @@ Projectiles: {
 	SBS.DisplayName: S B S
 	StygianBladeProj.DisplayName: Stygian Blade Proj
 	StygianBladeShoot.DisplayName: Stygian Blade Shoot
+	Staff2Projectile.DisplayName: Staff2 Projectile
+	Staff3Projectile.DisplayName: Staff3 Projectile
+	StaffProjectile.DisplayName: Staff Projectile
 }
 
 Buffs: {

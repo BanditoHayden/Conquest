@@ -201,12 +201,22 @@ public class ArenaSystem : ModSystem
 
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
+<<<<<<< Updated upstream
 	    if (source != null) {
             	if (source.Context == "Conquest/ArenaEnemy")
             	{
                     isArenaEnemy = true;
             	}
 	    }
+=======
+            if (source != null)
+            {
+                if (source.Context == "Conquest/ArenaEnemy")
+                {
+                    isArenaEnemy = true;
+                }
+            }
+>>>>>>> Stashed changes
             base.OnSpawn(npc, source);
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
