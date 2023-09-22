@@ -42,28 +42,21 @@ namespace Conquest.Projectiles.Hostile
                 Projectile.velocity *= 0.9f;
                 Projectile.velocity += new Vector2(0, -0.01f);
             }
-            if (timer == 60)
+
+            if (timer >= 60)
             {
-                Projectile.velocity *= -1;
-            }
-            if (timer >= 60 && timer < 90)
-            {
-                Projectile.velocity *= 1.1f;
-                Projectile.velocity += new Vector2(0, 0.01f);
-            }
-            if (timer >= 90 && timer < 120)
-            {
-                Projectile.velocity *= 0.9f;
-                Projectile.velocity += new Vector2(0, 0.01f);
-            }
-            if (timer == 120)
-            {
-                Projectile.velocity *= -1;
-            }
-            if (timer >= 120)
-            {
-                Projectile.velocity *= 1.1f;
-                Projectile.velocity += new Vector2(0, -0.01f);
+                if (timer % 60 == 0)
+                {
+                    Projectile.velocity = Projectile.DirectionTo(Main.player[Projectile.owner].position) * Projectile.velocity.Length();
+                }
+                if (timer % 60 < 20)
+                {
+                    Projectile.velocity *= 1.1f;
+                }
+                else if (timer % 60 > 45)
+                {
+                    Projectile.velocity *= 1 / 1.1f;
+                }
             }
         }
     }
