@@ -89,6 +89,20 @@ namespace Conquest.NPCs.Bosses.Anubis
             Attack5,
             Attack6,
         }
+
+
+
+        public void ChooseMove()
+        {
+            if (Main.rand.NextBool(6)) AI_State = (float)ActionState.Move6;
+            else if (Main.rand.NextBool(5)) AI_State = (float)ActionState.Move5;
+            else if (Main.rand.NextBool(4)) AI_State = (float)ActionState.Move4;
+            else if (Main.rand.NextBool(3)) AI_State = (float)ActionState.Move3;
+            else if (Main.rand.NextBool()) AI_State = (float)ActionState.Move2;
+            else AI_State = (float)ActionState.Move;
+            AI_Timer = 0;
+        }
+
         public override void SetDefaults()
         {
             NPC.width = 72;
@@ -123,7 +137,7 @@ namespace Conquest.NPCs.Bosses.Anubis
 
                 if (AI_Timer >= 20)
                 {
-                    AI_State = (float)ActionState.Move;
+                    ChooseMove();
                     AI_Timer = 0;
                 }
             }
@@ -133,7 +147,7 @@ namespace Conquest.NPCs.Bosses.Anubis
 
                 if (!NPC.HasValidTarget || Main.player[NPC.target].Distance(NPC.Center) > 500f)
                 {
-                    AI_State = (float)ActionState.Move;
+                    ChooseMove();
                     AI_Timer = 0;
                 }
             }
@@ -142,7 +156,7 @@ namespace Conquest.NPCs.Bosses.Anubis
         private void Move()
         {
             AI_Timer++;
-            if (AI_Timer >= 120)
+            if (AI_Timer >= 60)
             {
                 AI_State = (float)ActionState.Attack;
                 AI_Timer = 0;
@@ -161,18 +175,21 @@ namespace Conquest.NPCs.Bosses.Anubis
                 Vector2 direction = targetPosition - position;
                 direction.Normalize();
                 float speed = 14f;
-                int type = ProjectileID.BouncyBoulder;
+                int type = ModContent.ProjectileType<AnubisChaser>();
                 int damage = NPC.damage;
-                if (AI_Timer == 51)
+                if (AI_Timer == 31)
                 {
                     SoundEngine.PlaySound(Begone, NPC.position);
+                }
+                if (AI_Timer >= 31 && AI_Timer % 9 == 0)
+                {
+                    if (AI_Timer % 9 == 0) SoundEngine.PlaySound(SoundID.Item124, NPC.Center);
+                    Projectile.NewProjectile(source, position, direction * speed, type, damage / 5, 0f, Main.myPlayer);
                 }
                 if (AI_Timer >= 61)
                 {
                     AI_Timer = 0;
-                    SoundEngine.PlaySound(SoundID.Item124, NPC.Center);
-                    Projectile.NewProjectile(source, position, direction * speed, type, damage / 5, 0f, Main.myPlayer);
-                    AI_State = (float)ActionState.Move2;
+                    ChooseMove();
                 }
 
             }
@@ -181,7 +198,7 @@ namespace Conquest.NPCs.Bosses.Anubis
         private void Move2()
         {
             AI_Timer++;
-            if (AI_Timer >= 180)
+            if (AI_Timer >= 90)
             {
                 AI_State = (float)ActionState.Attack2;
                 AI_Timer = 0;
@@ -219,7 +236,7 @@ namespace Conquest.NPCs.Bosses.Anubis
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     float numberProjectiles = 12;
-                    float adjustedRotation = MathHelper.ToRadians(45);
+                    float adjustedRotation = MathHelper.ToRadians(40);
                     for (int i = 0; i < numberProjectiles; i++)
                     {
                         Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedBy(MathHelper.Lerp(-adjustedRotation, adjustedRotation, i / (numberProjectiles - 1))) * .2f; // Watch out for dividing by 0 if there is only 1 projectile.
@@ -228,7 +245,7 @@ namespace Conquest.NPCs.Bosses.Anubis
                 }
 
                 AI_Timer = 0;
-                AI_State = (float)ActionState.Move3;
+                ChooseMove();
             }
            
         }
@@ -236,7 +253,7 @@ namespace Conquest.NPCs.Bosses.Anubis
         {
 
             AI_Timer++;
-            if (AI_Timer >= 180)
+            if (AI_Timer >= 90)
             {
                 AI_State = (float)ActionState.Attack3;
                 AI_Timer = 0;
@@ -250,19 +267,21 @@ namespace Conquest.NPCs.Bosses.Anubis
             {
                 AI_Timer++;
                 var source = NPC.GetSource_FromAI();
-                Vector2 position = NPC.Center;
-                Vector2 targetPosition = Main.player[NPC.target].Center;
-                Vector2 direction = targetPosition - position;
-                direction.Normalize();
-                float speed = 1f;
-                int type = ProjectileID.CultistBossLightningOrb;
+                Vector2 position = NPC.Center + new Vector2(0, -NPC.height * 1.5f);
+                int type = ModContent.ProjectileType<AnubisBouncyBeam>();
                 int damage = NPC.damage;
+                if (AI_Timer >= 1 && AI_Timer % 20 == 0)
+                {
+                    for (float angle = MathF.PI / 4f; angle < 2 * MathF.PI; angle += MathF.PI / 2f)
+                    {
+                        Vector2 vel = new Vector2(15, 0).RotatedBy(angle);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), position, vel, ModContent.ProjectileType<AnubisBouncyBeam>(), NPC.damage / 5, 1, Main.myPlayer, 0, 0);
+                    }
+                }
                 if (AI_Timer >= 61)
                 {
-
                     AI_Timer = 0;
-                    Projectile.NewProjectile(source, position, direction * speed, type, damage / 5, 0f, Main.myPlayer);
-                    AI_State = (float)ActionState.Move4;
+                    ChooseMove();
                 }
             }
         }
@@ -275,31 +294,60 @@ namespace Conquest.NPCs.Bosses.Anubis
                 AI_Timer = 0;
             }
         }
+
+        int attack4Offset = 100;
         private void Attack4()
         {
             AI_Timer++;
             Player target = Main.player[NPC.target];
-            int offsetX = Main.rand.Next(-200, 200) * 6;
+            
             if (AI_Timer == 1)
             {
                 SoundEngine.PlaySound(Arise, NPC.position);
+                attack4Offset = NPC.direction * 100;
             }
-            if (AI_Timer >= 1)
+            if (AI_Timer >= 1 && AI_Timer % 5 == 0)
             {
-                if (Main.rand.NextBool(5))
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), target.Center.X + offsetX, target.Center.Y - 1200, 0f, 5f, ModContent.ProjectileType<AnubisBeam>(), NPC.damage / 5, 1, Main.myPlayer, 0, 0);
-                }
-                
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + attack4Offset, NPC.Center.Y + 1200, 0f, -10f, ModContent.ProjectileType<AnubisBeam>(), NPC.damage / 5, 1, Main.myPlayer, 0, 0);
+                attack4Offset += 50 * NPC.direction;
+
             }
             if (AI_Timer >= 61)
             {
                 AI_Timer = 0;
-                AI_State = (float)ActionState.Move5;
+                attack4Offset = NPC.direction * 100;
+                ChooseMove();
             }
 
 
         }
+
+        private void Attack4Alt()
+        {
+            AI_Timer++;
+            Player target = Main.player[NPC.target];
+
+            if (AI_Timer == 1)
+            {
+                SoundEngine.PlaySound(Arise, NPC.position);
+                attack4Offset = NPC.direction * 1200;
+            }
+            if (AI_Timer >= 1 && AI_Timer % 5 == 0)
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + attack4Offset, NPC.Center.Y + 1200, 0f, -10f, ModContent.ProjectileType<AnubisBeam>(), NPC.damage / 5, 1, Main.myPlayer, 0, 0);
+                attack4Offset -= 50 * NPC.direction;
+
+            }
+            if (AI_Timer >= 61)
+            {
+                AI_Timer = 0;
+                attack4Offset = NPC.direction * 1200;
+                ChooseMove();
+            }
+
+
+        }
+
         private void Move5()
         {
             AI_Timer++;
@@ -315,7 +363,7 @@ namespace Conquest.NPCs.Bosses.Anubis
             Vector2 direction = Main.player[NPC.target].Center - NPC.Center;
             direction.Normalize();
             direction *= 6f;
-            const int AmountOfProjectiles = 3;
+            const int AmountOfProjectiles = 5;
             if (AI_Timer == 51)
             {
                 SoundEngine.PlaySound(Fire, NPC.position);
@@ -325,7 +373,7 @@ namespace Conquest.NPCs.Bosses.Anubis
                 SoundEngine.PlaySound(SoundID.Item124, NPC.Center);
                 for (int i = 0; i < AmountOfProjectiles; ++i)
                 {
-                    Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, direction.RotatedByRandom(MathHelper.Pi / 4) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<AnubisBeam>(), NPC.damage / 3, 1, Main.myPlayer, 0, 0);
+                    Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, direction.RotatedByRandom(MathHelper.Pi / 4) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<AnubisBeam>(), NPC.damage / 5, 1, Main.myPlayer, 0, 0);
                 }
             }
             if (AI_Timer == 121)
@@ -333,7 +381,7 @@ namespace Conquest.NPCs.Bosses.Anubis
                 SoundEngine.PlaySound(SoundID.Item124, NPC.Center);
                 for (int i = 0; i < AmountOfProjectiles; ++i)
                 {
-                    Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, direction.RotatedByRandom(MathHelper.Pi / 4) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<AnubisBeam>(), NPC.damage / 3, 1, Main.myPlayer, 0, 0);
+                    Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, direction.RotatedByRandom(MathHelper.Pi / 4) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<AnubisBeam>(), NPC.damage / 5, 1, Main.myPlayer, 0, 0);
                 }
             }
             if (AI_Timer == 181)
@@ -350,7 +398,7 @@ namespace Conquest.NPCs.Bosses.Anubis
                 }
                 else if (!Main.expertMode)
                 {
-                    AI_State = (float)ActionState.Move;
+                    ChooseMove();
                     AI_Timer = 0;
                 }
               
@@ -376,77 +424,30 @@ namespace Conquest.NPCs.Bosses.Anubis
         {
             AI_Timer++;
             Player target = Main.player[NPC.target];
-            // Credit to PaperLuigi
-            float Speed = 3f;
-            Vector2 StartPosition = new Vector2(NPC.Center.X, NPC.Center.Y - 800);
+            // Credit to goose!!!
+            Vector2 StartPosition = target.Center;
+            float angle = Main.rand.NextFloat(2f * MathF.PI);
             int damage = NPC.damage / 4;
-            int type = ModContent.ProjectileType<AnubisBeam>();
 
-            float rotation = (float)Math.Atan2(StartPosition.Y - (target.position.Y + (target.height * 0.5f)), StartPosition.X - (target.position.X + (target.width * 0.5f)));
-            Vector2 velocity = new Vector2((float)((Math.Cos(rotation) * Speed) * -1), (float)((Math.Sin(rotation) * Speed) * -1));
-            if (AI_Timer == 51)
+            if (AI_Timer == 41)
             {
                 SoundEngine.PlaySound(Arise, NPC.position);
+                Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AnubisChaser>(), NPC.damage / 4, 1);
             }
-            if (AI_Timer == 61)
+            if (AI_Timer >= 51 && (AI_Timer - 41) % 20 == 0)
             {
                 SoundEngine.PlaySound(SoundID.Item124, NPC.Center);
-                for (int d = 0; d < 30; d++)
-                {
-                    Dust.NewDust(NPC.Center, 0, 0, DustID.BubbleBurst_Purple, 0f + Main.rand.Next(-20, 20), 0f + Main.rand.Next(-20, 20), 150, default(Color), 1.5f);
-                }
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    float numberProjectiles = 12;
-                    float adjustedRotation = MathHelper.ToRadians(45);
-                    for (int i = 0; i < numberProjectiles; i++)
-                    {
-                        Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedBy(MathHelper.Lerp(-adjustedRotation, adjustedRotation, i / (numberProjectiles - 1))) * .2f; // Watch out for dividing by 0 if there is only 1 projectile.
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), StartPosition.X, StartPosition.Y, perturbedSpeed.X * 5, perturbedSpeed.Y * 5, type, damage, 0, Main.myPlayer);
-                    }
-                }
-            }
-            if (AI_Timer == 121)
-            {
-                SoundEngine.PlaySound(SoundID.Item124, NPC.Center);
-                for (int d = 0; d < 30; d++)
-                {
-                    Dust.NewDust(NPC.Center, 0, 0, DustID.BubbleBurst_Purple, 0f + Main.rand.Next(-20, 20), 0f + Main.rand.Next(-20, 20), 150, default(Color), 1.5f);
-                }
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    float numberProjectiles = 12;
-                    float adjustedRotation = MathHelper.ToRadians(40);
-                    for (int i = 0; i < numberProjectiles; i++)
-                    {
-                        Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedBy(MathHelper.Lerp(-adjustedRotation, adjustedRotation, i / (numberProjectiles - 1))) * .2f; // Watch out for dividing by 0 if there is only 1 projectile.
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), StartPosition.X, StartPosition.Y, perturbedSpeed.X * 5, perturbedSpeed.Y * 5, type, damage, 0, Main.myPlayer);
-                    }
-                }
+                Vector2 vel = NPC.DirectionTo(target.Center + (target.velocity)) * 12;
+                Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, vel, ModContent.ProjectileType<AnubisBeam>(), NPC.damage / 4, 1);
             }
             if (AI_Timer == 181)
             {
-                SoundEngine.PlaySound(SoundID.Item124, NPC.Center);
-                for (int d = 0; d < 30; d++)
-                {
-                    Dust.NewDust(NPC.Center, 0, 0, DustID.BubbleBurst_Purple, 0f + Main.rand.Next(-20, 20), 0f + Main.rand.Next(-20, 20), 150, default(Color), 1.5f);
-                }
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    float numberProjectiles = 12;
-                    float adjustedRotation = MathHelper.ToRadians(35);
-                    for (int i = 0; i < numberProjectiles; i++)
-                    {
-                        Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedBy(MathHelper.Lerp(-adjustedRotation, adjustedRotation, i / (numberProjectiles - 1))) * .2f; // Watch out for dividing by 0 if there is only 1 projectile.
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), StartPosition.X, StartPosition.Y, perturbedSpeed.X * 5, perturbedSpeed.Y * 5, type, damage, 0, Main.myPlayer);
-                    }
-                }
                 if (SecondStage)
                 {
                     AI_State = (float)ActionState.Heal;
                     AI_Timer = 0;
                 }
-                else if (!SecondStage)
+                else
                 {
                     AI_State = (float)ActionState.Move;
                     AI_Timer = 0;
@@ -962,6 +963,7 @@ namespace Conquest.NPCs.Bosses.Anubis
         }
         public bool SecondStage;
         public bool FirstSecondStageSwitch;
+        public bool reversedAttack4 = false;
         public override void AI()
         {
             if (InGuardingState)
@@ -985,7 +987,12 @@ namespace Conquest.NPCs.Bosses.Anubis
                 SecondStage = true;
 
             }
-         
+
+            if (AI_State != (float)ActionState.Attack4)
+            {
+                reversedAttack4 = Main.rand.NextBool();
+            }
+
             switch (AI_State)
             {
                 case (float)ActionState.Notice:
@@ -1013,7 +1020,8 @@ namespace Conquest.NPCs.Bosses.Anubis
                     Move4();
                     break;
                 case (float)ActionState.Attack4:
-                    Attack4();
+                    if (reversedAttack4) Attack4Alt();
+                    else Attack4();
                     break;
                 case (float)ActionState.Move5:
                     Move5();
