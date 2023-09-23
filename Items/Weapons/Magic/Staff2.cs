@@ -97,7 +97,7 @@ namespace Conquest.Items.Weapons.Magic
         {
             Projectile.scale = MergeScale;
             Projectile.Resize((int)(Projectile.width * MergeScale), (int)(Projectile.height * MergeScale));
-            Main.NewText(Projectile.scale);
+            Projectile.damage = (int)(Projectile.damage * MergeScale);
             base.OnSpawn(source);
         }
         public override void AI()
@@ -118,13 +118,16 @@ namespace Conquest.Items.Weapons.Magic
                         Projectile other = Main.projectile[i];
                         if (other.Hitbox.Intersects(Projectile.Hitbox) && other.type == Type && other.ai[0] > 30 && other.ai[0] < 400 && Projectile.scale + other.scale < 5)
                         {
-                            Main.NewText("collided");
 
                             int b = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, Type, Projectile.damage, Projectile.knockBack, Projectile.owner, 0, Projectile.scale + other.scale);
                             //Main.projectile[b].timeLeft = (int)(Projectile.timeLeft + Main.projectile[b].ai[1] * 30);
                             Projectile.Kill();
                             other.Kill();
+                            Item item = Main.item[0];
+                            if (ModContent.GetModItem<>)
+                            {
 
+                            }
 
                         }
                     }

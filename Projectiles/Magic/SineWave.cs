@@ -71,6 +71,7 @@ namespace Conquest.Projectiles.Magic
         }
         public override void AI()
         {
+            
             Projectile.direction = (Projectile.velocity.X > 0).ToDirectionInt();
 
             float velocityLength = Projectile.velocity.Length();

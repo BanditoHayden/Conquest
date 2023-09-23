@@ -43,6 +43,8 @@ public class ArenaSystem : ModSystem
 
         private int maxNPCs = 5; //maximum number of npcs allowed at once (-1 = unlimited)
         private ArenaSpawnInfo spawnInfo;
+        private Point[] ActivationWires;
+        private Point[] OnWires; 
         private Vector2 arenaCenter; //center world coord of the arena
         private Vector2[] spawnPoints; //spawning positions of the arena
         private Rectangle arenaArea; //dimensions of arena
@@ -124,20 +126,26 @@ public class ArenaSystem : ModSystem
         /// <param name="spawns">SpawnInfo, use SpawnInfo.none to prevent spawning</param>
         /// <param name="ArenaCenter">The center tile coord of the arena</param>
         /// <param name="spawners">List of points of blocks which enemies will spawn on relative to the arena's center</param>
-        public void ActivateArena(Vector2 ArenaCenter, ArenaSpawnInfo spawns, Vector2[] spawners = null, int width = 0, int height = 0)
+        /// <param name="wires">Coords of wires that activate when this method is called</param>
+        public void ActivateArena(Vector2 ArenaCenter, ArenaSpawnInfo spawns, Vector2[] spawners = null, int width = 0, int height = 0, Point[] wires = null)
         {
             spawnInfo = spawns;
             arenaCenter = ArenaCenter;
             isActive = true;
             arenaArea = new Rectangle((int)(arenaCenter.X - width / 2), (int)(arenaCenter.Y - height / 2), width, height);
             spawnPoints = spawners;
+            ActivationWires = wires;
         }
         public override void PreUpdateWorld()
         {
             
             if (isActive)
             {
-                
+                foreach (var wire in ActivationWires)
+                {
+                    Wiring.TripWire(wire.X, wire.Y, 1, 1);
+                    
+                }
                 UpdatePlayer();
                 UpdateSpawning();
                 UpdateLights();
@@ -201,14 +209,6 @@ public class ArenaSystem : ModSystem
 
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
-<<<<<<< Updated upstream
-	    if (source != null) {
-            	if (source.Context == "Conquest/ArenaEnemy")
-            	{
-                    isArenaEnemy = true;
-            	}
-	    }
-=======
             if (source != null)
             {
                 if (source.Context == "Conquest/ArenaEnemy")
@@ -216,8 +216,6 @@ public class ArenaSystem : ModSystem
                     isArenaEnemy = true;
                 }
             }
->>>>>>> Stashed changes
-            base.OnSpawn(npc, source);
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
