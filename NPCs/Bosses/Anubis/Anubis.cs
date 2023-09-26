@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -91,15 +91,28 @@ namespace Conquest.NPCs.Bosses.Anubis
         }
 
 
-
+        int timesGoneWithoutHeal = 0;
+        int timesGoneWithoutHealMax = 9;
+        int healsDone = 0;
+        int maxHeals = 3;
         public void ChooseMove()
         {
-            if (Main.rand.NextBool(6)) AI_State = (float)ActionState.Move6;
-            else if (Main.rand.NextBool(5)) AI_State = (float)ActionState.Move5;
-            else if (Main.rand.NextBool(4)) AI_State = (float)ActionState.Move4;
-            else if (Main.rand.NextBool(3)) AI_State = (float)ActionState.Move3;
-            else if (Main.rand.NextBool()) AI_State = (float)ActionState.Move2;
-            else AI_State = (float)ActionState.Move;
+            if (SecondStage && timesGoneWithoutHeal > timesGoneWithoutHealMax && healsDone < maxHeals)
+            {
+                AI_State = (float)ActionState.Heal;
+                timesGoneWithoutHeal = 0;
+                healsDone++;
+            }
+            else
+            {
+                if (SecondStage) timesGoneWithoutHeal++;
+                if (Main.rand.NextBool(6)) AI_State = (float)ActionState.Move6;
+                else if (Main.rand.NextBool(5)) AI_State = (float)ActionState.Move5;
+                else if (Main.rand.NextBool(4)) AI_State = (float)ActionState.Move4;
+                else if (Main.rand.NextBool(3)) AI_State = (float)ActionState.Move3;
+                else if (Main.rand.NextBool()) AI_State = (float)ActionState.Move2;
+                else AI_State = (float)ActionState.Move;
+            }
             AI_Timer = 0;
         }
 
@@ -391,16 +404,8 @@ namespace Conquest.NPCs.Bosses.Anubis
                 {
                     Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, direction.RotatedByRandom(MathHelper.Pi / 4) * Main.rand.NextFloat(0.5f, 1f), ModContent.ProjectileType<AnubisBeam>(), NPC.damage / 3, 1, Main.myPlayer, 0, 0);
                 }
-                if (Main.expertMode)
-                {
-                    AI_State = (float)ActionState.Move6;
-                    AI_Timer = 0;
-                }
-                else if (!Main.expertMode)
-                {
-                    ChooseMove();
-                    AI_Timer = 0;
-                }
+                ChooseMove();
+                AI_Timer = 0;
               
             }
 
@@ -442,17 +447,8 @@ namespace Conquest.NPCs.Bosses.Anubis
             }
             if (AI_Timer == 181)
             {
-                if (SecondStage)
-                {
-                    AI_State = (float)ActionState.Heal;
-                    AI_Timer = 0;
-                }
-                else
-                {
-                    AI_State = (float)ActionState.Move;
-                    AI_Timer = 0;
-                }
-
+                ChooseMove();
+                AI_Timer = 0;
             }
         }
         private void Heal()
@@ -460,13 +456,16 @@ namespace Conquest.NPCs.Bosses.Anubis
             AI_Timer++;
             if(NPC.life != NPC.lifeMax)
             {
-                NPC.life += 150;
+                int difficultyScaling = 1;
+                if (Main.expertMode) difficultyScaling *= 2;
+                if (Main.masterMode) difficultyScaling *= 2;
+                NPC.life += 56 * difficultyScaling;
                 InGuardingState = true;
-                NPC.HealEffect(250, true);
+                if (AI_Timer % 10 == 0) NPC.HealEffect(560 * difficultyScaling, false);
             }
             if (AI_Timer >= 160)
             {
-                AI_State = (float)ActionState.SecondStage1;
+                ChooseMove();
                 AI_Timer = 0;
                 InGuardingState = false;
             }
