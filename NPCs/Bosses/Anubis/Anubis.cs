@@ -122,7 +122,7 @@ namespace Conquest.NPCs.Bosses.Anubis
             NPC.height = 116 ;
             NPC.damage = 66;
             NPC.defense = 25;
-            NPC.lifeMax = 45000;
+            NPC.lifeMax = 55000;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath9;
             NPC.value = 60f;
