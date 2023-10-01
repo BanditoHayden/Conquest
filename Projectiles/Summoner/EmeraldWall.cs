@@ -73,7 +73,7 @@ namespace Conquest.Projectiles.Summoner
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (timer > 5)
             {

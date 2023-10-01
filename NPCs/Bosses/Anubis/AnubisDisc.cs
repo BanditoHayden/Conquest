@@ -57,7 +57,7 @@ namespace Conquest.NPCs.Bosses.Anubis
         {
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             var settings = new ParticleOrchestraSettings
             {

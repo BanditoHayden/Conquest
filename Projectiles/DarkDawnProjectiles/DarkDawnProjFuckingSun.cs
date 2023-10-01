@@ -72,13 +72,13 @@ namespace Conquest.Projectiles.DarkDawnProjectiles {
             
         }
         public override void OnSpawn(IEntitySource source) {
-            SoundEngine.PlaySound(sunFalling　with {Volume = 3.0f});
+            SoundEngine.PlaySound(sunFalling with {Volume = 3.0f});
             SoundEngine.PlaySound(sunSummoning);
             Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld)*10f;
             oldVelocity = Projectile.velocity;
             playerStuff.cameraShaking = true;
         }
-        public override void Kill(int timeLeft) {
+        public override void OnKill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.Item163);
             playerStuff.cameraShaking = false;
         }

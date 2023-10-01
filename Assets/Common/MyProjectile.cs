@@ -60,7 +60,7 @@ namespace Conquest.Assets.Common
                 }
             }
         }
-        public override void Kill(Projectile projectile, int timeLeft)
+        public override void OnKill(Projectile projectile, int timeLeft)
         {
             Player player = Main.player[projectile.owner];
             if (projectile.GetGlobalProjectile<MyProjectile>().manaOnKill == true)

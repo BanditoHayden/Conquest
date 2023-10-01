@@ -103,11 +103,6 @@ namespace Conquest.Projectiles.Ranged
             }
             return false;
         }
-        public override void Kill(int timeLeft)
-        {
-            base.Kill(timeLeft);
-        }
-
-
+     
     }
 }

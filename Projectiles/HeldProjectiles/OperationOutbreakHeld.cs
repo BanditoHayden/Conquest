@@ -54,7 +54,7 @@ namespace Conquest.Projectiles.HeldProjectiles
             Projectile.scale = 1.2f;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Main.LocalPlayer.GetModPlayer<MyPlayer>().BeamActive = 0;
         }

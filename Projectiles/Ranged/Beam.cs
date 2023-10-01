@@ -81,7 +81,7 @@ namespace Conquest.Projectiles.Ranged
             target.immune[Projectile.owner] = 5;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Main.LocalPlayer.GetModPlayer<MyPlayer>().OutbreakShake = 0;
         }

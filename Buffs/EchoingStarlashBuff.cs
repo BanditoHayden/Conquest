@@ -10,7 +10,7 @@ public class EchoingStarlashBuff : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        BuffID.Sets.IsAnNPCWhipDebuff[Type] = true;
+        BuffID.Sets.IsATagBuff[Type] = true;
     }
     public override void Update(Player player, ref int buffIndex)
     {

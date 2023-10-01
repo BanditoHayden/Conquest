@@ -1529,6 +1529,9 @@ Projectiles: {
 	SBS.DisplayName: S B S
 	StygianBladeProj.DisplayName: Stygian Blade Proj
 	StygianBladeShoot.DisplayName: Stygian Blade Shoot
+	AnubisBouncyBeam.DisplayName: Anubis Bouncy Beam
+	AnubisChaser.DisplayName: Anubis Chaser
+	AnubisTarget.DisplayName: Anubis Target
 }
 
 Buffs: {

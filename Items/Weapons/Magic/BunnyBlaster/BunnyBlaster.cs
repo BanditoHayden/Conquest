@@ -73,7 +73,7 @@ namespace Conquest.Items.Weapons.Magic.BunnyBlaster
 		{
 			Projectile.spriteDirection = Main.player[Projectile.owner].direction;
 		}
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SoundEngine.PlaySound(SoundID.NPCDeath1,Projectile.Center);
 			Gore.NewGore(null, Projectile.Center, Projectile.velocity, 76);

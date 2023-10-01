@@ -46,7 +46,7 @@ namespace Conquest.Projectiles.Ranged
                 Projectile.Kill();
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Main.myPlayer];
             MyPlayer modPlayer = player.GetModPlayer<MyPlayer>();

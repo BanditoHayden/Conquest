@@ -41,7 +41,7 @@ namespace Conquest.Projectiles.Magic
                 ParticleOrchestrator.RequestParticleSpawn(clientOnly: false, ParticleOrchestraType.ItemTransfer, settings);
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Vector2 perturbedSpeed = new Vector2(0, -6).RotatedByRandom(MathHelper.ToRadians(360));
             switch (Main.rand.Next(3))

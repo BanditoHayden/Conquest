@@ -54,7 +54,7 @@ public class AnubisTarget : ModProjectile
         Projectile.ai[0]++;
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         if (!Main.dedServ)
         {

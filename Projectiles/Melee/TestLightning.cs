@@ -48,7 +48,7 @@ namespace Conquest.Projectiles.Melee
                // MoonlordDeathDrama.RequestLight(((Projectile.timeLeft + 920) - 480f) / 120f, Projectile.Center);
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player projOwner = Main.player[Projectile.owner];
 

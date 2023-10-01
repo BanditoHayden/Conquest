@@ -232,7 +232,7 @@ namespace Conquest.NPCs.Bosses.RatKing
                 Projectile.velocity.Y = 16f;
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             var entitySource = Projectile.GetSource_FromThis();
             Projectile.NewProjectile(entitySource, Projectile.Center.X, Projectile.Center.Y, Main.rand.Next(0, 0), Main.rand.Next(0,0), ModContent.ProjectileType<BallOfLight>(), 30, 0f, Projectile.owner);

@@ -94,7 +94,7 @@ public class LivingShadow : ModNPC
                     BuffID.Confused
 				}
         };
-        NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+    //    NPCID.Sets.SpecificDebuffImmunity.Add(Type, debuffData);
 
         // Influences how the NPC looks in the Bestiary
         NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
