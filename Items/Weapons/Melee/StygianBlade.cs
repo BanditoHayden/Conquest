@@ -68,8 +68,8 @@ namespace Conquest.Items.Weapons.Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-           .AddIngredient(ModContent.ItemType<AbhorrentMeat>(), 1)
-           .AddIngredient(ItemID.NightsEdge, 1)
+           .AddIngredient(ModContent.ItemType<AbhorrentMeat>(), 2)
+           .AddIngredient(ItemID.HallowedBar, 9)
            .AddTile(TileID.Anvils)
            .Register();
         }
