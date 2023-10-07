@@ -93,7 +93,7 @@ namespace Conquest.Projectiles.Magic
             }
 
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Main.myPlayer];
             MyPlayer modPlayer = player.GetModPlayer<MyPlayer>();

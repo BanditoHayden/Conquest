@@ -88,13 +88,7 @@ public class LivingShadow : ModNPC
         NPCID.Sets.BossBestiaryPriority.Add(Type);
 
         // Specify the debuffs it is immune to
-        NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData
-        {
-            SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused
-				}
-        };
-        NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
         // Influences how the NPC looks in the Bestiary
         NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -127,7 +121,7 @@ public class LivingShadow : ModNPC
 
         // Don't set immunities like this as of 1.4:
         // NPC.buffImmune[BuffID.Confused] = true;
-        // immunities are handled via dictionaries through NPCID.Sets.DebuffImmunitySets
+        // immunities are handled via dictionaries through NPCID.Sets.specificDebuffImmunity
 
         // Custom AI, 0 is "bound town NPC" AI which slows the NPC down and changes sprite orientation towards the target
         NPC.aiStyle = -1;

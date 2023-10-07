@@ -49,7 +49,7 @@ namespace Conquest.Projectiles.Ranged
             }
             Projectile.ai[0]++;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player owner = Main.player[Projectile.owner];
             SearchForTargets(owner, out bool foundTarget, out float distanceFromTarget, out Vector2 targetCenter);

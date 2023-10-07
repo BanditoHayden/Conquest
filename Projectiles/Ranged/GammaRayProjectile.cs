@@ -110,10 +110,10 @@ public class GammaRayProjectile : ModProjectile
         }
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         Main.player[Projectile.owner].HeldItem.useTime = Main.player[Projectile.owner].HeldItem.useAnimation;
-        base.Kill(timeLeft);
+        base.OnKill(timeLeft);
     }
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

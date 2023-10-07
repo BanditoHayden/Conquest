@@ -60,7 +60,7 @@ namespace Conquest.Projectiles
                 dontfuckingheal = true;
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
             NPC closestNPC = FindClosestNPC(maxDetectRadius);

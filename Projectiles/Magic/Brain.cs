@@ -22,7 +22,7 @@ namespace Conquest.Projectiles.Magic
             Projectile.penetrate = 1;
             Projectile.timeLeft = 120;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCHit13, Projectile.position);
             for (int i = 0; i < 50; i++)

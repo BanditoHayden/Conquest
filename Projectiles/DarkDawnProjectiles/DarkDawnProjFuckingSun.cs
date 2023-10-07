@@ -78,7 +78,7 @@ namespace Conquest.Projectiles.DarkDawnProjectiles {
             oldVelocity = Projectile.velocity;
             playerStuff.cameraShaking = true;
         }
-        public override void Kill(int timeLeft) {
+        public override void OnKill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.Item163);
             playerStuff.cameraShaking = false;
         }

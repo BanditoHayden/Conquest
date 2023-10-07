@@ -399,9 +399,9 @@ namespace Conquest.Projectiles.Melee
                 }
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
-            base.Kill(timeLeft);
+            base.OnKill(timeLeft);
         }
     }
     public class StygianBladeShoot : ModProjectile
@@ -460,13 +460,13 @@ namespace Conquest.Projectiles.Melee
 
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 30; i++)
             {
                 Dust.NewDust(Projectile.Center, 80, 80, DustID.Torch, Projectile.oldVelocity.X/3, Projectile.oldVelocity.Y/3);
             }
-            base.Kill(timeLeft);
+            base.OnKill(timeLeft);
         }
     }
 }

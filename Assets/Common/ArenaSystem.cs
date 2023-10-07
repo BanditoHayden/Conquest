@@ -41,21 +41,31 @@ public class ArenaSystem : ModSystem
         private const float SwingRange = MathHelper.Pi/2;
         private const float SwingTime = 120;
 
-        private int maxNPCs = 5; //maximum number of npcs allowed at once (-1 = unlimited)
-        private ArenaSpawnInfo spawnInfo;
-        private Point[] ActivationWires;
-        private Point[] OnWires; 
+        private int maxNPCs = 3; //maximum number of npcs allowed at once (-1 = unlimited)
+        private ArenaSpawnInfo spawnInfo; //down
+        private Point[] ActivationWires; //coords of wires to activate
         private Vector2 arenaCenter; //center world coord of the arena
         private Vector2[] spawnPoints; //spawning positions of the arena
         private Rectangle arenaArea; //dimensions of arena
         private List<int> NPCs = new List<int>(); //active npc.whoami
         private int currentWave = 0; //yeah
         private int SpawnQueueIndex = 0; //yeah
-        private int timer;
-        private int spawnTimer; //god please sync
-        private int spawnLocation;
+        private int timer; //main timer
+        private int spawnTimer; //cooldown in ticks between waves
+        private int spawnLocation; //cycles through spawners
+        private bool wavesCompleted;
+        //hi goose
 
-		private void UpdateLights()
+        public override void NetSend(BinaryWriter writer)
+        {
+            base.NetSend(writer);
+        }
+        public override void NetReceive(BinaryReader reader)
+        {
+            base.NetReceive(reader);
+        }//TODO sync
+
+        private void UpdateLights()
 		{
             Vector2 LeftLight = arenaCenter + new Vector2(-10, -20) * 16;
             Vector2 RightLight = arenaCenter + new Vector2(10, -20) * 16;
@@ -104,19 +114,31 @@ public class ArenaSystem : ModSystem
                     }
                 }
             }
-            Main.NewText(string.Join(", ", NPCs) + ", " + NPCs.Count().ToString());
-            if (SpawnQueueIndex > spawnInfo.Enemies[currentWave].Count() && --spawnTimer <= 0)
+            if (SpawnQueueIndex > spawnInfo.Enemies[currentWave].Count()-1 && NPCs.Count() == 0 && currentWave <= spawnInfo.numWaves)
             {
-                //queueNextWave();
+                queueNextWave();
+            } else if (SpawnQueueIndex > spawnInfo.Enemies[currentWave].Count() - 1 && NPCs.Count() == 0 && currentWave > spawnInfo.numWaves)
+            {
+                wavesCompleted = !!!!!!!false; //true
             }
+            List<int> ints = new List<int>();
             foreach (int i in NPCs)
             {
                 var a = Main.npc[i];
+                if (!a.active)
+                {
+                    ints.Add(i);
+                }
+            }
+            foreach (var i in ints)
+            {
+                if (NPCs.Contains(i))
+                    NPCs.Remove(i);
             }
         }
         void queueNextWave()
         {
-            spawnTimer = 240;
+            spawnTimer = 360;
             currentWave += 1;
             SpawnQueueIndex = 0;
         }
@@ -138,25 +160,29 @@ public class ArenaSystem : ModSystem
         }
         public override void PreUpdateWorld()
         {
-            
             if (isActive)
             {
+                /*
                 foreach (var wire in ActivationWires)
                 {
-                    Wiring.TripWire(wire.X, wire.Y, 1, 1);
+                    //Wiring.TripWire(wire.X, wire.Y, 1, 1);
                     
-                }
+                }*/
                 UpdatePlayer();
                 UpdateSpawning();
                 UpdateLights();
                 
                 timer++;
 
-                if (timer >= 600)
+                if (timer >= 6000)
                 {
                     closeArena();
                     timer = 0;
                     
+                }
+                if (wavesCompleted)
+                {
+                    closeArena();
                 }
             }
             base.PreUpdateWorld();
@@ -182,7 +208,7 @@ public class ArenaSystem : ModSystem
                 var a = Main.npc[nPC];
                 a.StrikeInstantKill();
             }
-            Main.NewText("deactivate");
+            NPCs.Clear();
         }
     }
     public class ArenaPlayer : ModPlayer
@@ -238,7 +264,7 @@ public class ArenaSystem : ModSystem
     public struct ArenaSpawnInfo
     {
         public List<int[]> Enemies;
-        public int numWaves;
+        readonly public int numWaves;
         public float waveTime;
 
         /// <summary>

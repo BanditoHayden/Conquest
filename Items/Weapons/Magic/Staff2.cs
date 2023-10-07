@@ -123,12 +123,6 @@ namespace Conquest.Items.Weapons.Magic
                             //Main.projectile[b].timeLeft = (int)(Projectile.timeLeft + Main.projectile[b].ai[1] * 30);
                             Projectile.Kill();
                             other.Kill();
-                            Item item = Main.item[0];
-                            if (ModContent.GetModItem<>)
-                            {
-
-                            }
-
                         }
                     }
                 }

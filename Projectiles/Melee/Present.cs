@@ -50,7 +50,7 @@ namespace Conquest.Projectiles.Melee
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0, ModContent.ProjectileType<Boom>(), Projectile.damage, 0, Projectile.owner, 0, 0);
             Projectile.Kill();
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Main.myPlayer];
             MyPlayer modPlayer = player.GetModPlayer<MyPlayer>();
@@ -79,7 +79,7 @@ namespace Conquest.Projectiles.Melee
         }
 
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
             player.Heal(10);

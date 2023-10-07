@@ -76,7 +76,7 @@ public class EchoingStarlashMine : ModProjectile
         Projectile.velocity *= -0.1f;
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         if (!Main.dedServ)
         {
