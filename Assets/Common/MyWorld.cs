@@ -37,19 +37,14 @@ namespace Conquest.Assets.Common {
         {
             if (SubworldSystem.IsActive<DesertTemple>())
             {
-                Main.LocalPlayer.ZoneDesert = true;
-                // Update mechanisms
+                // Main.LocalPlayer.ZoneDesert = true;
                 Wiring.UpdateMech();
-
-                // Update tile entities
                 TileEntity.UpdateStart();
                 foreach (TileEntity te in TileEntity.ByID.Values)
                 {
                     te.Update();
                 }
                 TileEntity.UpdateEnd();
-
-                // Update liquid
                 if (++Liquid.skipCount > 1)
                 {
                     Liquid.UpdateLiquid();
