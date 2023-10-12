@@ -24,6 +24,12 @@ using Conquest.Subworlds;
 using Conquest.Items.Weapons.Melee;
 using Point16 = Terraria.DataStructures.Point16;
 using Terraria.GameContent;
+using static Terraria.Player;
+using Terraria.Graphics.CameraModifiers;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
+using static Conquest.Assets.Common.CinematicSystem;
+using Terraria.ObjectData;
 
 namespace Conquest.Assets.Common
 {
@@ -50,10 +56,10 @@ public class ArenaSystem : ModSystem
         private List<int> NPCs = new List<int>(); //active npc.whoami
         private int currentWave = 0; //yeah
         private int SpawnQueueIndex = 0; //yeah
-        private int timer; //main timer
+        private int timer = 0; //main timer
         private int spawnTimer; //cooldown in ticks between waves
         private int spawnLocation; //cycles through spawners
-        private bool wavesCompleted;
+        private bool wavesCompleted = false;
         //hi goose
 
         public override void NetSend(BinaryWriter writer)
@@ -157,9 +163,14 @@ public class ArenaSystem : ModSystem
             arenaArea = new Rectangle((int)(arenaCenter.X - width / 2), (int)(arenaCenter.Y - height / 2), width, height);
             spawnPoints = spawners;
             ActivationWires = wires;
+            timer = 0;
+            wavesCompleted = false;
         }
         public override void PreUpdateWorld()
         {
+            var player = Main.LocalPlayer;
+            var ArenaPlayer = Main.LocalPlayer.GetModPlayer<ArenaPlayer>();
+            var Cinematic = GetInstance<CinematicSystem>();
             if (isActive)
             {
                 /*
@@ -168,24 +179,34 @@ public class ArenaSystem : ModSystem
                     //Wiring.TripWire(wire.X, wire.Y, 1, 1);
                     
                 }*/
+                if (timer == 0)
+                {
+                    var a = new PanCameraModifier(player.Center-Main.screenPosition, player.Center - Main.screenPosition + Vector2.UnitX * 200, 120, 60, 120, EasingStyle.linear, FullName);
+                    Main.instance.CameraModifiers.Add(a);
+                }
+                if (timer < 5*60)
+                {
+                    Cinematic.HideAllUI();   
+                } else
+                {
+                    Cinematic.ShowAllUI();
+                }
                 UpdatePlayer();
                 UpdateSpawning();
                 UpdateLights();
                 
-                timer++;
 
                 if (timer >= 6000)
                 {
                     closeArena();
-                    timer = 0;
-                    
                 }
                 if (wavesCompleted)
                 {
                     closeArena();
                 }
             }
-            base.PreUpdateWorld();
+
+            timer++;
         }
         public void UpdatePlayer()
         {
@@ -209,11 +230,14 @@ public class ArenaSystem : ModSystem
                 a.StrikeInstantKill();
             }
             NPCs.Clear();
+            currentWave = 0;
+            SpawnQueueIndex = 0;
         }
     }
     public class ArenaPlayer : ModPlayer
     {
         public bool inArena = false;
+        public bool cinematic = false;
         public override bool CanUseItem(Item item)
         {
             if (item.type == ItemID.RodofDiscord && inArena)
@@ -221,6 +245,9 @@ public class ArenaSystem : ModSystem
                 return false;
             }
             return base.CanUseItem(item);
+        }
+        public override void PreUpdate()
+        {
         }
         public override void PostUpdate()
         {
@@ -281,6 +308,141 @@ public class ArenaSystem : ModSystem
         }
 
         public static ArenaSpawnInfo none => new ArenaSpawnInfo(new List<int[]>(),0); //empty spawn info
+    }
+    [Autoload(Side = ModSide.Client)] // This attribute makes this class only load on a particular side. Naturally this makes sense here since UI should only be a thing clientside. Be wary though that accessing this class serverside will error
+    public class CinematicSystem : ModSystem
+    {
+        private int timer;
+        private Vector2 oldMouseScreen;
+        private int stillCursor;
+
+        public override void PostUpdatePlayers()
+        {
+            if (Main.MouseScreen == oldMouseScreen)
+            {
+                stillCursor++;
+            }
+            else
+            {
+                stillCursor = 0;
+            }
+            oldMouseScreen = Main.MouseScreen;
+        }
+        public override void UpdateUI(GameTime gameTime)
+        {
+            
+            if (timer > 0)
+                --timer;
+        }
+
+        // Adding a custom layer to the vanilla layer list that will call .Draw on your interface if it has a state
+        // Setting the InterfaceScaleType to UI for appropriate UI scaling
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        {
+            if (timer > 0 || timer == -1)
+                foreach (var layer in layers)
+                {
+                    if (layer.Name.ToLower() == "vanilla: cursor" && stillCursor > 60)
+                    {
+                        layer.Active = false;
+                    } else { continue; }
+                    if (layer.Name.ToLower() != "vanilla: settings button" || layer.Name.ToLower() == "vanilla: ingame options")
+                        layer.Active = false;
+                }
+        }
+        /// <summary>
+        /// Hide all UI for <paramref name="duration"/> frames. Leave at -1 for indefinent.
+        /// </summary>
+        /// <param name="duration"></param>
+        public void HideAllUI(int duration = -1)
+        {
+            timer = duration;
+        }
+        /// <summary>
+        /// Shows all UI if UI is hidden.
+        /// </summary>
+        public void ShowAllUI()
+        {
+            timer = 0;
+        }
+        /// <summary>
+        /// Easing function types for panning 
+        /// </summary>
+        public enum EasingStyle
+        {
+            linear,
+            easeIn,
+            easeOut,
+            easeInOut,
+        }
+    }
+    public class PanCameraModifier : ICameraModifier
+    {
+        private int _goFrames;
+
+        private int _returnFrames;
+
+        private int _framesLasted;
+
+        private int _focusFrames;
+
+        private EasingStyle _style;
+
+        private Vector2 _startPosition;
+
+        private Vector2 _endPosition;
+
+        public string UniqueIdentity { get; private set; }
+
+        public bool Finished { get; private set; }
+
+        public PanCameraModifier(Vector2 startPosition, Vector2 endPosition, int goFrames, int returnFrames, int focusFrames, EasingStyle style = EasingStyle.linear, string uniqueIdentity = null)
+        {
+            
+            _startPosition = startPosition;
+            _endPosition = endPosition;
+            _goFrames = goFrames;
+            _returnFrames = returnFrames;
+            _focusFrames = focusFrames;
+            _style = style;
+
+            UniqueIdentity = uniqueIdentity;
+        }
+        public float Ease(float value)
+        {
+            switch (_style)
+            {
+                case EasingStyle.linear:
+                    return value;
+                case EasingStyle.easeInOut:
+                    if (value <= 0.5f)
+                        return 2.0f * value * value;
+                    value -= 0.5f;
+                    return 2.0f * value * (1.0f - value) + 0.5f;
+                default:
+                    return value;
+            }
+        }
+        public void Update(ref CameraInfo cameraInfo)
+        {
+            Vector2 direction = _startPosition.DirectionTo(_endPosition);
+            float distance = _startPosition.Distance(_endPosition);
+            float num1 = Ease((float)_framesLasted / _goFrames);
+            float num2 = Ease(1 - (float)(_framesLasted - _goFrames - _focusFrames) / _returnFrames);
+            ref Vector2 cameraPosition = ref cameraInfo.CameraPosition;
+            if (num1 <= 1)
+                cameraPosition += direction * distance * num1;
+            else if (_framesLasted > _goFrames && _framesLasted < _focusFrames)
+                cameraPosition += direction * distance;
+            if (_framesLasted > _goFrames + _focusFrames)
+            cameraPosition += direction * distance * num2;
+
+            _framesLasted++;
+            if (_framesLasted >= _goFrames + _focusFrames + _returnFrames)
+            {
+                Finished = true;
+            }
+        }
     }
 }
 

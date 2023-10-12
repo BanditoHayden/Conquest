@@ -1,12 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace Conquest.Projectiles.Melee
 {
@@ -270,6 +275,7 @@ namespace Conquest.Projectiles.Melee
         // Copied from Main.DrawPrettyStarSparkle() which is private
         private static void DrawPrettyStarSparkle(float opacity, SpriteEffects dir, Vector2 drawpos, Color drawColor, Color shineColor, float flareCounter, float fadeInStart, float fadeInEnd, float fadeOutStart, float fadeOutEnd, float rotation, Vector2 scale, Vector2 fatness)
         {
+
             Texture2D sparkleTexture = TextureAssets.Extra[98].Value;
             Color bigColor = shineColor * opacity * 0.5f;
             bigColor.A = 0;
@@ -289,4 +295,3 @@ namespace Conquest.Projectiles.Melee
         }
     }
 }
-
