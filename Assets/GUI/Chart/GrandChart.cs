@@ -87,7 +87,7 @@ namespace Conquest.Assets.GUI.Chart
 
 
             etElmt.Append(playButton4);
-
+            /*
             Asset<Texture2D> etButton5 = ModContent.Request<Texture2D>("Conquest/Assets/GUI/Chart/Pirate");
 
             ETButton playButton5 = new ETButton(etButton5, "Button5");
@@ -96,7 +96,7 @@ namespace Conquest.Assets.GUI.Chart
 
 
             etElmt.Append(playButton5);
-
+            */
 
         }
         private void FlowerField(UIMouseEvent evt, UIElement listeningElement)

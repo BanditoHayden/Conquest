@@ -1541,6 +1541,9 @@ Projectiles: {
 	StygianBladeShoot.DisplayName: Stygian Blade Shoot
 	Staff3Projectile.DisplayName: Staff3 Projectile
 	NaniteMinion.DisplayName: Nanite Minion
+	AnubisBouncyBeam.DisplayName: Anubis Bouncy Beam
+	AnubisChaser.DisplayName: Anubis Chaser
+	AnubisTarget.DisplayName: Anubis Target
 }
 
 Buffs: {
