@@ -31,9 +31,10 @@ namespace Conquest.Items.Materials
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             ArenaSpawnInfo info = new ArenaSpawnInfo(new List<int[]>(), 0);// <- initialize new spawn info
-            info.Enemies.Add(new int[]{ NPCID.Zombie, NPCID.Zombie, NPCID.Zombie, NPCID.Zombie});// <- add wave 1
+            info.Enemies.Add(new int[] { NPCID.Zombie, NPCID.Zombie, NPCID.Zombie, NPCID.Zombie});// <- add wave 1
             info.Enemies.Add(new int[] { NPCID.Skeleton, NPCID.Skeleton, NPCID.Skeleton, NPCID.Skeleton });// <- add wave 2
-            ModContent.GetInstance<ArenaSystem>().ActivateArena(player.Center, info, new Vector2[]{ player.Center, player.Center + Vector2.UnitX * 150, player.Center - Vector2.UnitX * 150 }, 50 * 16, 50 * 16);
+            info.Enemies.Add(new int[] { NPCID.GiantWalkingAntlion, NPCID.GiantWalkingAntlion, NPCID.GlowingSnail, NPCID.Squirrel });// <- add wave 3
+            ModContent.GetInstance<ArenaSystem>().ActivateArena(player.Bottom, info, new Vector2[]{ player.Center, player.Center + Vector2.UnitX * 150, player.Center - Vector2.UnitX * 150 }, 50 * 16, 50 * 16);
             return false;
         }
     }

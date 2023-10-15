@@ -41,5 +41,4 @@ namespace Conquest.Items.Weapons.Melee
             // Projectile Properties
         }
     }
-
 }
