@@ -22,7 +22,7 @@ public class LatentEnergy : InfoDisplay
 
     int timer = 0;
     string energyVal = "100%";
-    public override string DisplayValue(ref Color displayColor)
+    public override string DisplayValue(ref Color displayColor, ref Color displayShadowColor)/* tModPorter Suggestion: Set displayColor to InactiveInfoTextColor if your display value is "zero"/shows no valuable information */
     {
         if (timer++ % 5 == 0)
         {

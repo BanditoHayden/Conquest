@@ -18,6 +18,7 @@ namespace Conquest.NPCs.Bosses.Anubis
             Projectile.hostile = true;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 60;
+            Projectile.alpha = 255;
         }
         public override void AI()
         {

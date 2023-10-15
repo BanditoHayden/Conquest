@@ -105,7 +105,5 @@ namespace Conquest.Projectiles.Ranged
         {
             base.OnKill(timeLeft);
         }
-
-
     }
 }

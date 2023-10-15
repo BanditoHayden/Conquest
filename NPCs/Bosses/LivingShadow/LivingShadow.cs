@@ -89,11 +89,18 @@ public class LivingShadow : ModNPC
 
         // Specify the debuffs it is immune to
         NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+        NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData
+        {
+            SpecificallyImmuneTo = new int[] {
+                    BuffID.Confused
+				}
+        };
+        //NPCID.Sets.SpecificDebuffImmunity.Add(Type, debuffData);
 
         // Influences how the NPC looks in the Bestiary
         NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
         {
-            CustomTexturePath = "Assets/Textures/Bestiary/LivingShadow_Portrait",
+            CustomTexturePath = "Conquest/Assets/Textures/Bestiary/LivingShadow_Portrait",
             PortraitScale = 0.6f, // Portrait refers to the full picture when clicking on the icon in the bestiary
             PortraitPositionYOverride = 0f,
         };

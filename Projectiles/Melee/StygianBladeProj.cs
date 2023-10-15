@@ -464,9 +464,10 @@ namespace Conquest.Projectiles.Melee
         {
             for (int i = 0; i < 30; i++)
             {
-                Dust.NewDust(Projectile.Center, 80, 80, DustID.Torch, Projectile.oldVelocity.X/3, Projectile.oldVelocity.Y/3);
+                Dust.NewDust(Projectile.Center, 80, 80, DustID.Torch, Projectile.oldVelocity.X / 3, Projectile.oldVelocity.Y / 3);
             }
             base.OnKill(timeLeft);
         }
+    
     }
 }
