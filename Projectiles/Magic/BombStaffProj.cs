@@ -13,8 +13,11 @@ using Conquest.Assets.Common;
 
 namespace Conquest.Projectiles.Magic
 {
-    internal class BombStaffProj : ModProjectile
+    public class BombStaffProj : ModProjectile
     {
+
+        private ref float boomCounter => ref Projectile.ai[1];
+
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("炸弹");
@@ -36,14 +39,14 @@ namespace Conquest.Projectiles.Magic
             Projectile.tileCollide = false;
         }
 
-        private int boomCounter = 0;
-        private int frameCounter = 0;
+        
+
         public override void AI()
         {
             boomCounter++;
-            if (++frameCounter >= 30 && boomCounter < 90)
+            if (++Projectile.frameCounter >= 30 && boomCounter < 90)
             {
-                frameCounter = 0;
+                Projectile.frameCounter = 0;
                 if (Projectile.frame == 0)
                 {
                     Projectile.frame = 1;
@@ -53,9 +56,9 @@ namespace Conquest.Projectiles.Magic
                     Projectile.frame = 0;
                 }
             }
-            if (++frameCounter >= 15 && boomCounter >= 90 && boomCounter < 180)
+            if (++Projectile.frameCounter >= 15 && boomCounter >= 90 && boomCounter < 180)
             {
-                frameCounter = 0;
+                Projectile.frameCounter = 0;
                 if (Projectile.frame == 0)
                 {
                     Projectile.frame = 1;
@@ -65,9 +68,9 @@ namespace Conquest.Projectiles.Magic
                     Projectile.frame = 0;
                 }
             }
-            if (++frameCounter >= 5 && boomCounter >= 180 && boomCounter < 270)
+            if (++Projectile.frameCounter >= 5 && boomCounter >= 180 && boomCounter < 270)
             {
-                frameCounter = 0;
+                Projectile.frameCounter = 0;
                 if (Projectile.frame == 0)
                 {
                     Projectile.frame = 1;

@@ -1368,6 +1368,16 @@ Items: {
 		DisplayName: Stygian Blade
 		Tooltip: ""
 	}
+
+	Staff3: {
+		DisplayName: Staff3
+		Tooltip: ""
+	}
+
+	NaniteStaff: {
+		DisplayName: Nanite Staff
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -1529,6 +1539,8 @@ Projectiles: {
 	SBS.DisplayName: S B S
 	StygianBladeProj.DisplayName: Stygian Blade Proj
 	StygianBladeShoot.DisplayName: Stygian Blade Shoot
+	Staff3Projectile.DisplayName: Staff3 Projectile
+	NaniteMinion.DisplayName: Nanite Minion
 	AnubisBouncyBeam.DisplayName: Anubis Bouncy Beam
 	AnubisChaser.DisplayName: Anubis Chaser
 	AnubisTarget.DisplayName: Anubis Target
@@ -1717,6 +1729,11 @@ Buffs: {
 	StardustLightning: {
 		DisplayName: Stardust Lightning
 		Description: Mods.Conquest.Buffs.StardustLightning.Description
+	}
+
+	TheSwarm: {
+		DisplayName: The Swarm
+		Description: Mods.Conquest.Buffs.TheSwarm.Description
 	}
 }
 
