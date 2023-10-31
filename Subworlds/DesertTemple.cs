@@ -5,6 +5,7 @@ using Terraria.WorldBuilding;
 using Terraria.GameContent.Generation;
 using Point16 = Terraria.DataStructures.Point16;
 using StructureHelper;
+using System.IO;
 
 namespace Conquest.Subworlds
 {
@@ -36,8 +37,9 @@ namespace Conquest.Subworlds
                         progress.Message = "Generating Desert Temple";
                         int x = 100;
                         int y = 243;
-                     Point16 point2 = new Point16(x, y);
-                    Generator.GenerateStructure("Structures/DesertTempleMiddle", point2, Conquest.Instance, false);
+                        Point16 point2 = new Point16(x, y);
+                        Generator.GenerateStructure("Structures/DesertTempleMiddle", point2, Conquest.Instance, false);
+
                 },120f),
                  new PassLegacy ("Generating thing", (progress, _) =>
                 {

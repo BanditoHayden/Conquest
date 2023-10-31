@@ -13,6 +13,10 @@ namespace Conquest.Assets.Common
 {
     public static class Helpers
     {
+        public static void PlaceTile(int x, int y, int TileType, int style = 0, int direction = -1)
+        {
+            WorldGen.PlaceObject(x, y, TileType, true, style, 0, -1, direction);
+        }
         public static MyPlayer GetWorldPlayer(this Player player) => player.GetModPlayer<MyPlayer>();
         // All credit goes to StormyTuna
         /// <summary>Gets the closest hostile NPC within the range of that position</summary>
