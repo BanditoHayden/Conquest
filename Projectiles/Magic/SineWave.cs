@@ -12,6 +12,7 @@ using Terraria.ID;
 using Terraria.DataStructures;
 using Conquest.Dusts;
 using Conquest.Assets.Common;
+using System.IO;
 
 namespace Conquest.Projectiles.Magic
 {
@@ -21,12 +22,11 @@ namespace Conquest.Projectiles.Magic
         public Vector2 initialCenter;
 
         // This field is used as a counter for the wave motion
-        public int sineTimer;
+        public ref float sineTimer => ref Projectile.ai[0];
 
         // This field "offsets" the progress along the wave
-        public float waveOffset;
+        public ref float waveOffset => ref Projectile.ai[1];
 
-        public Color drawColor = Color.Black;
 
         public override void SetStaticDefaults()
         {
@@ -59,11 +59,19 @@ namespace Conquest.Projectiles.Magic
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return drawColor * 0.64f;
+            return Projectile.ai[2] == 0 ? Color.FloralWhite : Color.Black * 0.64f;
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.WriteVector2(initialCenter);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            initialCenter = reader.ReadVector2();
+        }
         public override void AI()
         {
+            
             Projectile.direction = (Projectile.velocity.X > 0).ToDirectionInt();
 
             float velocityLength = Projectile.velocity.Length();
@@ -129,7 +137,6 @@ namespace Conquest.Projectiles.Magic
                 Projectile.frame = 1;
                 Projectile.rotation = 0;
             }
-
             sineTimer++;
         }
 
@@ -143,7 +150,7 @@ namespace Conquest.Projectiles.Magic
             for (int i = 0; i < 50; i++)
             {
                 Vector2 speed = Main.rand.NextVector2CircularEdge(1f, 1f);
-                Dust d = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<GhostDust>(), speed * 5, Scale: 1.5f, newColor: drawColor);
+                Dust d = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<GhostDust>(), speed * 5, Scale: 1.5f, newColor: Projectile.ai[2] == 0 ? Color.FloralWhite : Color.Black);
                 d.noGravity = true;
 
             }
@@ -171,10 +178,10 @@ namespace Conquest.Projectiles.Magic
                 effects = SpriteEffects.None;
             }
             */
-            if (drawColor == Color.Black) default(Effects.BlackTrail).Draw(Projectile);
+            if (Projectile.ai[2] == 1) default(Effects.BlackTrail).Draw(Projectile);
             else default(Effects.WhiteTrail).Draw(Projectile);
 
-            // Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, frame, Projectile.GetAlpha(lightColor), rotation, rotationOrigin, Projectile.scale, effects, 0);
+            //Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, frame, Projectile.GetAlpha(lightColor), rotation, rotationOrigin, Projectile.scale, effects, 0);
 
             return true;
         }

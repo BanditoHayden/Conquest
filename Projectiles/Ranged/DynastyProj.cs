@@ -150,14 +150,6 @@ namespace Conquest.Projectiles.Ranged
                 d.noGravity = true;
             }
         }
-
-
-
-
-
-
-
-
         public override bool PreDraw(ref Color lightColor)
         {
             if (drawColor == Color.DarkGoldenrod)

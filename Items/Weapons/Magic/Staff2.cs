@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Conquest.Projectiles.Magic;
+using Conquest.Assets.Common;
 
 namespace Conquest.Items.Weapons.Magic
 {
@@ -23,8 +24,8 @@ namespace Conquest.Items.Weapons.Magic
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 30;
-            Item.height = 30;
+            Item.width = 40;
+            Item.height = 40;
             Item.value = Item.sellPrice(silver: 1);
             Item.noMelee = true;
             Item.rare = 6;
@@ -58,9 +59,8 @@ namespace Conquest.Items.Weapons.Magic
             for (float i = 0; i < num; i++)
             {
                 Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rot, rot, i / (float)(num - 1))); // Watch out for dividing by 0 if there is only 1 projectile.
-                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
+                int a = Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI, 0, 1);
             }
-
             return false;
 
         }
@@ -68,7 +68,13 @@ namespace Conquest.Items.Weapons.Magic
     public class Staff2Projectile : ModProjectile
     {
         private ref float timer => ref Projectile.ai[0];
+        private ref float MergeScale => ref Projectile.ai[1];
         public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.AmethystBolt}";
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 50;    //The length of old position to be recorded
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 3;
+        }
         public override void SetDefaults()
         {
             Projectile.ignoreWater = true;
@@ -78,23 +84,54 @@ namespace Conquest.Items.Weapons.Magic
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.aiStyle = -1;
-            Projectile.Opacity = 0;
+            Projectile.Opacity = 1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 5;
+            Projectile.timeLeft = 420;
+            Projectile.scale = 1;
             base.SetDefaults();
         }
         float gravity = 0.2f;
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.scale = MergeScale;
+            Projectile.Resize((int)(Projectile.width * MergeScale), (int)(Projectile.height * MergeScale));
+            Projectile.damage = (int)(Projectile.damage * MergeScale);
+            base.OnSpawn(source);
+        }
         public override void AI()
         {
+            Projectile.scale = MergeScale;
             timer++;
-            Dust a = Dust.NewDustPerfect(Projectile.Center, DustID.GemAmethyst, Vector2.Zero, (int)(255 - timer * 17));
+            Dust a = Dust.NewDustPerfect(Projectile.Center, DustID.GemAmethyst, Vector2.Zero, MergeScale == 1 ? (int)(255 - timer * 17) : 0, default, Projectile.scale);
             a.noGravity = true;
 
             Projectile.velocity.Y += gravity;
-            base.AI();
+
+            if (timer > 30 && timer < 400) //Bug?
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    if (i != Projectile.whoAmI)
+                    {
+                        Projectile other = Main.projectile[i];
+                        if (other.Hitbox.Intersects(Projectile.Hitbox) && other.type == Type && other.ai[0] > 30 && other.ai[0] < 400 && Projectile.scale + other.scale < 5)
+                        {
+
+                            int b = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, Type, Projectile.damage, Projectile.knockBack, Projectile.owner, 0, Projectile.scale + other.scale);
+                            //Main.projectile[b].timeLeft = (int)(Projectile.timeLeft + Main.projectile[b].ai[1] * 30);
+                            Projectile.Kill();
+                            other.Kill();
+                        }
+                    }
+                }
+                base.AI();
+            }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            Projectile.penetrate--;
             if (Projectile.velocity.X != oldVelocity.X)
             {
                 Projectile.velocity.X = -oldVelocity.X;
@@ -103,6 +140,10 @@ namespace Conquest.Items.Weapons.Magic
             {
                 Projectile.velocity.Y = -oldVelocity.Y;
             }
+            return Projectile.penetrate <= 0;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
             return false;
         }
     }
